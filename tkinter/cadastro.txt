@@ -1,0 +1,22 @@
+Pergunta;sdfgfds
+Resposta;sdfgfdsg
+Pergunta;a
+Resposta;a
+Pergunta;b
+Resposta;b
+Pergunta;a
+	Resposta;a
+Pergunta;b
+	Resposta;b
+Pergunta;w
+	Resposta;w
+Pergunta;a
+	Resposta;a
+Pergunta;a
+	Resposta;a
+Pergunta;a
+	Resposta;a
+Pergunta;a
+	Resposta;a
+Pergunta;a
+	Resposta;a

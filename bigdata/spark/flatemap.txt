@@ -1,0 +1,9 @@
+[Row(value='Big Data learning '),
+ Row(value='New to spark .exp in python and sql '),
+ Row(value='learning RDD '),
+ Row(value='good skills in Python '),
+ Row(value='Pandas is what keep my job intresting '),
+ Row(value='scaling is still a prob '),
+ Row(value='hoping spark can help.  '),
+ Row(value='Intro to big data'),
+ Row(value='Good database skills sql and no sql ')]

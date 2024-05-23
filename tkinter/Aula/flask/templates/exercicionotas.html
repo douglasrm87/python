@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <title>Gestão de notas :D</title>
+    </head>
+    <body>
+        Aprovado ou Reprovado
+        <div>
+            <form method="get">
+                Nota AV1:
+                <input type="text" name="av1">
+                <br>
+                Nota AV2:
+                <input type="text" name="av2">
+                <br>
+                <input type="submit" value="Enviar">
+            </form>
+        </div>
+        {% if resultado %}
+        <h1>
+            {{resultado}} com média {{media}}!!!
+        </h1>
+        {% endif %}
+    </body>
+</html>

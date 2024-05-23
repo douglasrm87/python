@@ -1,0 +1,7 @@
+Douglas Together;50;60
+Ruby PHP;80;40
+Silvester Alone;50;60
+Bradi Ping;80;40
+Silvester Alone;50;60 
+Tchau pro tio Alone;50;60
+Trace route me;80;40
