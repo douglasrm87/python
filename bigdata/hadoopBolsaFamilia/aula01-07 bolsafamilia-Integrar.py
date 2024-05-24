@@ -4,7 +4,7 @@ import pprint
 from datetime import datetime
 acumulador = 0.0
 estadoAnt = "AC"
-def processarLinha(estado,valor):
+def processar_linha(estado,valor):
     global estadoAnt
     global acumulador
     valor = valor.replace(",",".")
@@ -22,7 +22,7 @@ def real_br_money_mask(my_value):
     c = b.replace('.',',')
     return c.replace('v','.')
 # opens csv file and assingns it to an object
-with open('202101_BolsaFamilia_Pagamentos.csv') as csvfile:
+with open('C:/Users/dougl/Downloads/202101_BolsaFamilia_Pagamentos/202101_BolsaFamilia_Pagamentos.csv') as csvfile:
     # Use Sniffer to figure out csv dialect
     # lendo blocos de 1K
     dialect = csv.Sniffer().sniff(csvfile.read(16384))
@@ -47,7 +47,7 @@ with open('202101_BolsaFamilia_Pagamentos.csv') as csvfile:
                 estadoAnt = row[2]
                 iniciarEstado = iniciarEstado + 1
                 #print ("Estado: [%s]\t Valor:[%s]" % (row[2].strip(),row[8].strip().replace(",",".")))
-            processarLinha(row[2],row[8])
+            processar_linha(row[2],row[8])
     for k, v in dictBolsa.items():
         print ("%s\t%s" % (k, real_br_money_mask(v)))
 print ("Quantidade de linhas: ",contLinhas)
