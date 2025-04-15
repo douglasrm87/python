@@ -1,6 +1,6 @@
 #https://www.geeksforgeeks.org/pandas-groupby/
 import pandas as pd
-import pyspark.pandas as ps
+
 data1 = {'Name':['Douglas', 'Pedro', 'Douglas', 'Jose',
                  'Gaurav', 'Pedro', 'Jose', 'Abhi'],
         'Age':[27, 24, 22, 32,

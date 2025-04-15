@@ -1,5 +1,4 @@
 import matplotlib.pyplot   as plt
-import pyspark 
 from pyspark.sql import SparkSession 
 from pyspark.sql.types import StructType, StructField, StringType,IntegerType,FloatType    
 spark = SparkSession.builder.appName('SparkByExamples.com').getOrCreate()    
@@ -26,8 +25,16 @@ pandasDF2 = df.toPandas()
 print(pandasDF2)
 
 cores = ['pink', 'silver' ]
+
+# Atenção:
+#  A variável plt parece "desconectada" do gráfico porque o método plot está sendo chamado diretamente no objeto retornado por pandasDF2.groupby(...).nome.count(). Isso pode ser confuso, mas é importante entender como o matplotlib e o pandas interagem.
+#  O método plot() do pandas retorna um objeto matplotlib, mas não o exibe automaticamente. Para exibir o gráfico, você deve chamar plt.show() após a criação do gráfico.
+
 tipoFlorGraf = pandasDF2.groupby (["Genero"]).nome.count()
 tipoFlorGraf.plot(kind='pie', autopct='%1.0f%%',colors=cores)
 
-plt.show()
-
+plt.title("Distribuição de Gêneros")
+plt.ylabel("")
+plt.xlabel("")
+plt.legend(title="Gênero", loc="upper right")
+plt.savefig('/workspaces/python/bigdata/sparkgraficos/pysparkTOpandas.png')

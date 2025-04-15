@@ -1,17 +1,18 @@
 # https://indianaiproduction.com/matplotlib-pie-chart/
 import pandas as pd
+from IPython.display import Image, display
 # importing matplotlib library
 import matplotlib.pyplot as plt
 
-colors = ["c", 'b','r','y','g']
+colors = ["pink", 'blue','red','yellow','green']
 # creating dataframe
 df = pd.DataFrame({
-	'Object': ['Mesa', 'Cadeira', 'Mouse', 'Teclado', 'Notebook'],
+	'Objetos': ['Mesa', 'Cadeira', 'Mouse', 'Teclado', 'Notebook'],
 	'Price': [45.90, 38, 90, 60, 40]
 })
 
 # plotting a pie chart
-plt.pie(df["Price"], labels=df["Object"] , colors =colors, autopct = "%0.2f%%")
-plt.xlabel('Eixo Y')
-plt.ylabel('Eixo X')
-plt.show()
+plt.pie(df["Price"], labels=df["Objetos"] , colors =colors, autopct = "%0.2f%%")
+# Saving the plot to a file since plt.show() may not work in VSCode web
+plt.savefig('/workspaces/python/bigdata/sparkgraficos/graficoPizza.png')
+
