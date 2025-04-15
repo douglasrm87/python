@@ -1,35 +1,22 @@
-from operator import itemgetter
-import sys
-  
-nomeArqCorrente = None
-nomeArqQdade = 0
-nomeArq = None
-  
-for line in sys.stdin:
-    # slpiting the data on the basis of tab we have provided in mapper.py
-    nomeArq, qdade = line.split('\t', 1)
-    nomeArq = nomeArq.split(".")
-    if (len (nomeArq) > 1):
-        nomeArq = nomeArq[1]
-    else:
-        continue
-    try:
-        qdade = int(qdade)
-    except ValueError:
-        # qdade was not a number, so silently ignore this line
-        continue
-    
-    # this IF-switch only works because Hadoop sorts map output
-    # by key (here: word) before it is passed to the reducer
-    if nomeArqCorrente == nomeArq:
-        nomeArqQdade += qdade
-    else:
-        # Quando a palavrar mudar mostra a quantida anterior
-        if nomeArqCorrente:
-            # write result to STDOUT
-            print ("%s\t%s" % (nomeArqCorrente, nomeArqQdade))
-        nomeArqQdade = qdade
-        nomeArqCorrente = nomeArq
-# do not forget to output the last word if needed!
-if nomeArqCorrente == nomeArq:
-    print ("%s\t%s" % (nomeArqCorrente, nomeArqQdade))
+total 196
+-rw-rw-rw-  1 codespace root      0 Apr 14 22:18 -input
+-rw-rw-rw-  1 codespace root      0 Apr 14 22:18 -mapper
+drwxrwxrwx+ 3 codespace root   4096 Apr 14 22:18 .
+drwxrwxrwx+ 8 codespace root   4096 Apr 14 22:18 ..
+drwxrwxrwx+ 2 codespace root   4096 Apr 14 22:18 __pycache__
+-rw-rw-rw-  1 codespace root   1069 Apr 14 22:18 analisesentimento.py
+-rw-rw-rw-  1 codespace root    762 Apr 14 22:18 classehadoop.py
+-rw-rw-rw-  1 codespace root 129201 Apr 14 22:18 hadoop-streaming-2.7.3.jar
+-rw-rw-rw-  1 codespace root    216 Apr 14 22:18 hive.py
+-rw-rw-rw-  1 codespace root    646 Apr 14 22:18 mapper - Douglas.py
+-rw-rw-rw-  1 codespace root    649 Apr 14 22:18 mapper.py
+-rw-rw-rw-  1 codespace root      0 Apr 14 22:21 mapperDiretorios.py
+-rw-rw-rw-  1 codespace root    162 Apr 14 22:18 mapperIntroducao.py
+-rw-rw-rw-  1 codespace root   1074 Apr 14 22:18 reducer - douglas.py
+-rw-rw-rw-  1 codespace root   1077 Apr 14 22:18 reducer.py
+-rw-rw-rw-  1 codespace root      0 Apr 14 22:21 reducerDiretorios.py
+-rw-rw-rw-  1 codespace root   1108 Apr 14 22:18 reducersempipeline.py
+-rw-rw-rw-  1 codespace root   1288 Apr 14 22:18 teste - Copia.docx
+-rw-rw-rw-  1 codespace root   1288 Apr 14 22:18 teste.txt
+-rw-rw-rw-  1 codespace root   6673 Apr 14 22:18 teste02.txt
+-rw-rw-rw-  1 codespace root    866 Apr 14 22:18 testeJoaoMaria.txt
