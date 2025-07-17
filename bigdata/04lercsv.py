@@ -4,7 +4,7 @@ import codecs
 comentariosAPP = {}
 def lerCSV(coluna):
     cont = 0
-    comentAPP=csv.reader (codecs.open('psiclogia.csv', 'rU', 'utf-16'))
+    comentAPP=csv.reader (codecs.open('psiclogia.csv', 'r', 'utf-16'))
     for item in comentAPP:
         if item[coluna]:
             comentariosAPP [cont] = item[coluna]
