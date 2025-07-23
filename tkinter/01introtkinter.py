@@ -1,3 +1,4 @@
+#python -m pip install PySimpleGUI
 import tkinter as tk
 def exit_button(master):
     master.geometry( "400x400" )
@@ -7,3 +8,4 @@ root = tk.Tk()
 root.title("Usando tkinter")
 exit_button(root)
 root.mainloop()
+

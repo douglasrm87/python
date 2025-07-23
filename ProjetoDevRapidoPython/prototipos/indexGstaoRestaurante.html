@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sistema de Gestão de Restaurante</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f8f8f8;
+    }
+
+    header {
+      background-color: #2b78c0;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+
+    nav {
+      width: 220px;
+      background-color: #7e3ce7;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      padding-top: 70px;
+    }
+
+    nav a {
+      display: block;
+      color: white;
+      padding: 15px;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    nav a:hover {
+      background-color: #c02b7d;
+    }
+
+    .main {
+      margin-left: 220px;
+      padding: 30px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #c0392b;
+    }
+
+    .mesas {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 20px;
+    }
+
+    .mesa {
+      padding: 30px;
+      text-align: center;
+      background: #ecf0f1;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #e74c3c;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+    }
+
+    button:hover {
+      background-color: #c0392b;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f4f4f4;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Sistema de Gestão de Restaurante</h1>
+  </header>
+
+  <nav>
+    <a href="#" onclick="mostrarTela('dashboard')">🏠 Dashboard</a>
+    <a href="#" onclick="mostrarTela('mesas')">🍽️ Mesas</a>
+    <a href="#" onclick="mostrarTela('pedido')">📝 Novo Pedido</a>
+    <a href="#" onclick="mostrarTela('pedidos')">📋 Pedidos</a>
+  </nav>
+
+  <div class="main">
+    <!-- Dashboard -->
+    <div id="dashboard" class="card">
+      <h2>Bem-vindo</h2>
+      <p>Use o menu à esquerda para gerenciar o salão, registrar pedidos e acompanhar atendimentos.</p>
+    </div>
+
+    <!-- Mesas -->
+    <div id="mesas" class="card hidden">
+      <h2>Mesas Disponíveis</h2>
+      <div class="mesas">
+        <div class="mesa">Mesa 1</div>
+        <div class="mesa">Mesa 2</div>
+        <div class="mesa">Mesa 3</div>
+        <div class="mesa">Mesa 4</div>
+        <div class="mesa">Mesa 5</div>
+      </div>
+    </div>
+
+    <!-- Novo Pedido -->
+    <div id="pedido" class="card hidden">
+      <h2>Novo Pedido</h2>
+      <form>
+        <label>Mesa:</label>
+        <select>
+          <option>Mesa 1</option>
+          <option>Mesa 2</option>
+          <option>Mesa 3</option>
+        </select>
+
+        <label>Produto:</label>
+        <select>
+          <option>Pizza Calabresa</option>
+          <option>Hambúrguer Artesanal</option>
+          <option>Refrigerante</option>
+        </select>
+
+        <label>Quantidade:</label>
+        <input type="number" value="1" min="1"/>
+
+        <button type="submit">Adicionar ao Pedido</button>
+      </form>
+    </div>
+
+    <!-- Pedidos -->
+    <div id="pedidos" class="card hidden">
+      <h2>Pedidos Atuais</h2>
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Mesa</th>
+          <th>Garçom</th>
+          <th>Status</th>
+        </tr>
+        <tr>
+          <td>101</td>
+          <td>Mesa 1</td>
+          <td>João</td>
+          <td>Aberto</td>
+        </tr>
+        <tr>
+          <td>102</td>
+          <td>Mesa 2</td>
+          <td>Ana</td>
+          <td>Fechado</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    function mostrarTela(id) {
+      const telas = ['dashboard', 'mesas', 'pedido', 'pedidos'];
+      telas.forEach(tela => {
+        document.getElementById(tela).classList.add('hidden');
+      });
+      document.getElementById(id).classList.remove('hidden');
+    }
+
+    // Mostra o dashboard por padrão
+    mostrarTela('dashboard');
+  </script>
+
+</body>
+</html>
