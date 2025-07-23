@@ -68,3 +68,28 @@ table, th, td {
 th {
   background: #f4f4f4;
 }
+
+.login-container {
+  width: 300px;
+  margin: 100px auto;
+  padding: 20px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.login-container h2 {
+  margin-bottom: 20px;
+}
+
+.login-container input, .login-container button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.erro {
+  color: red;
+  margin-bottom: 10px;
+}

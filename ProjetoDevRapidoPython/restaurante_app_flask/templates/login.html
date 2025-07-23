@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - Restaurante</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="login-container">
+    <h2>Login do Sistema</h2>
+    {% if erro %}
+      <p class="erro">{{ erro }}</p>
+    {% endif %}
+    <form method="post">
+      <label>Usuário:</label>
+      <input type="text" name="usuario" required>
+
+      <label>Senha:</label>
+      <input type="password" name="senha" required>
+
+      <button type="submit">Entrar</button>
+    </form>
+  </main>
+</body>
+</html>
