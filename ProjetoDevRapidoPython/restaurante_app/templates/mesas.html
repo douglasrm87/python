@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Mesas Disponíveis</h2>
+  <div class="mesas">
+    {% for i in range(1, 6) %}
+      <div class="mesa">Mesa {{ i }}</div>
+    {% endfor %}
+  </div>
+{% endblock %}

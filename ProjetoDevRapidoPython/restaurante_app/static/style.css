@@ -1,0 +1,70 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f8f8f8;
+}
+
+header {
+  background: #c0392b;
+  color: white;
+  padding: 15px;
+  text-align: center;
+}
+
+nav {
+  background: #e74c3c;
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+main {
+  padding: 20px;
+}
+
+.mesas {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.mesa {
+  padding: 20px;
+  background: #ecf0f1;
+  border-radius: 8px;
+  width: 100px;
+  text-align: center;
+  font-weight: bold;
+}
+
+form input, form select, form button {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table, th, td {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+th {
+  background: #f4f4f4;
+}
