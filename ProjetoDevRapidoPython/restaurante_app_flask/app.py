@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 
 app = Flask(__name__)
+# Evitará o erroRuntimeError: The session is unavailable because no secret key was set.  Set the secret_key on the application to something unique and secret.
 app.secret_key = 'segredo_super_secreto'  # Recomendado usar variável de ambiente
 
 # Usuários simulados
