@@ -1,0 +1,19 @@
+body{
+    font-family: "Times New Roman";
+    background-color: #F2FFFC;
+    color: rgb(97, 8, 230);
+}
+h1{
+    text-align: center;
+    background-color: #0be52c;
+    color: white;
+    font-family: "Open Sans Condesed", sans-serif;
+}
+h2{
+    font-family: "Open Sans Condesed", sans-serif;
+
+}
+p{
+    text-align: justify;
+    font-family: "Crinsom Text";
+}

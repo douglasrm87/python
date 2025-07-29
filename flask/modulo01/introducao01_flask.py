@@ -19,7 +19,7 @@ app = Flask(__name__)
 @app.route('/')
 def raiz():
     print ("Nome do programa:", __name__)
-    return '<h1>Hello World' + 'Programa Principal: </p>' + __name__
+    return '<h1 text-align:center background-color: #851944 color: green  font-family: "Open Sans Condesed", sans-serif> Hello World' + 'Programa Principal: </p>' + __name__
 
 #Exemplo slide Flask Application
 #https://vigilant-space-eureka-599vgvpxwrfvqxj-5000.app.github.dev/alo
@@ -42,4 +42,4 @@ def apresentarNomeHTML(mNome):
 #Exemplo slide Flask - Message Flashing
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=8081)
+    app.run(host='127.0.0.1', port=8081,debug=True, use_reloader=True)
