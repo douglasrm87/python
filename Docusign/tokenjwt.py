@@ -47,6 +47,8 @@ Ao seguir estas diretrizes e utilizar o código de exemplo como ponto de partida
 #pip install docusign-esign
 #pip install PyJWT
 #pip install requests
+#pip install cryptography
+#https://www.base64encode.net/
 
 import jwt
 import time
@@ -63,11 +65,11 @@ DS_JWT = {
     "authorization_server": "account-d.docusign.com"  # Para ambiente de desenvolvimento, use "account.docusign.com" para produção
 }
 
-import pandas as pd
+#import pandas as pd
 #df = pd.read_csv('/workspaces/python/Docusign/chaveprivada.pem', sep='-')
-df =  pd.read_csv ('/workspaces/python/Docusign/CLIC_ATUALIZA_DIA_ELEK.csv', sep='|')
+#df =  pd.read_csv ('/workspaces/python/Docusign/CLIC_ATUALIZA_DIA_ELEK.csv', sep='|')
 #df = pd.read_csv ('/workspaces/python/Replica/CLIC_ATUALIZA_DIA_ELEK.csv', sep='|')
-print (df.head(5))
+#print (df.head(5))
 
 def get_docusign_jwt_token():
     """
@@ -117,7 +119,7 @@ def get_docusign_jwt_token():
         return f"Ocorreu um erro: {e}"
 
 # --- Exemplo de uso ---
-'''
+
 if __name__ == "__main__":
     access_token = get_docusign_jwt_token()
     if "Erro" not in access_token:
@@ -126,4 +128,3 @@ if __name__ == "__main__":
     else:
         print(access_token)
 
-    '''
