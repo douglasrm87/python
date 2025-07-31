@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Produtos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Produtos Disponíveis</h1>
+    <ul>
+        {% for produto in produtos %}
+            <li class="{% if produto.promocao %}promocao{% endif %}">
+                {{ produto.nome }} - R$ {{ "%.2f"|format(produto.preco) }}
+                {% if produto.promocao %}
+                    <strong> - EM PROMOÇÃO!</strong>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <button onclick="mostrarMensagem()">Clique aqui</button>
+
+    <script>
+        function mostrarMensagem() {
+            alert("Você clicou no botão! Obrigado por visitar nossa loja.");
+        }
+    </script>
+</body>
+</html>
