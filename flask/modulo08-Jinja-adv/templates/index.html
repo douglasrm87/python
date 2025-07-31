@@ -12,11 +12,28 @@
         <h1>Lista de Produtos</h1>
 
         <ul>
+            <!-- Versao 1.0
             {% for p in produtos %}
             <li class="{% if p['promocao'] %}promocao{% endif %}">
                 {{ p['nome'] }} - R$ {{ "%.2f"|format(p['preco']) }}
                 {% if p['promocao'] %} <strong>(Promoção!)</strong> {% endif %}
             </li>
+            {% endfor %} -->
+
+            <!-- Versao 2.0 com a funcao de excluir -->
+            {% for p in produtos %}
+                <li class="{% if p['promocao'] %}promocao{% endif %}">
+                    <div>
+                        {{ p['nome'] }} - R$ {{ "%.2f"|format(p['preco']) }}
+                        {% if p['promocao'] %}<strong> (Promoção!)</strong>{% endif %}
+                    </div>
+
+                    {% if session.get('user_id') %}
+                    <form method="POST" action="{{ url_for('delete_product', id=p['id']) }}" onsubmit="return confirmarRemocao()">
+                        <button type="submit" class="remover">Remover</button>
+                    </form>
+                    {% endif %}
+                </li>
             {% endfor %}
         </ul>
         
@@ -35,6 +52,9 @@
     <script>
         function mensagem() {
             alert("Obrigado por visitar!");
+        }
+        function confirmarRemocao() {
+           return confirm("Tem certeza que deseja remover este produto?");
         }
     </script>
 </body>

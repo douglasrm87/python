@@ -7,19 +7,18 @@
 </head>
 <body>
     
-    <form method="POST">
+    <form method="POST"  class="container" >
         <h2>Login</h2>
-        {% if error %}
-            <p class="error">{{ error }}</p>
+         {% if session.get('user_id') %}
+            <p>Você já está logado como {{ session.get('user_nome') }}.</p> <!-- Display the username if logged in -->
+            <a href="{{ url_for('logout') }}">Logout</a>
+         {% else %}
+            <label>Usuário:</label><br>
+            <input type="text" name="usuario"><br>
+            <label>Senha:</label><br>
+            <input type="password" name="senha"><br><br>
+            <button type="submit">Entrar</button>
         {% endif %}
-        {% if success %}
-            <p class="success">{{ success }}</p>
-        {% endif %}
-        <label>Usuário:</label><br>
-        <input type="text" name="usuario"><br>
-        <label>Senha:</label><br>
-        <input type="password" name="senha"><br><br>
-        <button type="submit">Entrar</button>
     </form>
 </body>
 </html>

@@ -56,6 +56,7 @@ input[type="number"] {
     border-radius: 8px;
     transition: border-color 0.3s ease;
     width: 100%;
+    background-color: #d6dbdb;
 }
 
 input:focus {
@@ -141,3 +142,40 @@ a:active {
         padding: 20px;
     }
 }
+
+.remover {
+    background-color: #e53e3e;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin-top: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.remover:hover {
+    background-color: #c53030;
+}
+/* Estilo para mensagens de erro */
+.error-message {
+    color: #e53e3e;
+    background-color: #fff5f5;
+    padding: 10px;              
+    border: 1px solid #e53e3e;
+    border-radius: 8px;         
+    margin-top: 10px;
+    text-align: center;
+}
+/* Estilo para mensagens de sucesso */
+.success-message {
+    color: #2f855a;
+    background-color: #f0fff4;
+    padding: 10px;
+    border: 1px solid #2f855a;
+    border-radius: 8px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+

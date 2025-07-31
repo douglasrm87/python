@@ -3,16 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Adicionar Produto</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h2>Novo Produto</h2>
-    <form method="POST">
-        <label>Nome:</label><br>
-        <input type="text" name="nome"><br>
-        <label>Preço:</label><br>
-        <input type="number" name="preco" step="0.01"><br>
-        <label><input type="checkbox" name="promocao"> Promoção</label><br><br>
-        <button type="submit">Salvar</button>
-    </form>
+    <div class="container">
+        <h1>Adicionar Produto</h1>
+        <p>Preencha os detalhes do produto abaixo:</p>
+       
+        {% if session.get('user_id') %}
+            <form method="POST"  class="container">
+                <label>Nome:</label><br>
+                <input type="text" name="nome"><br>
+                <label>Preço:</label><br>
+                <input type="number" name="preco" step="0.01"><br>
+                <label><input type="checkbox" name="promocao"> Promoção</label><br><br>
+                <button type="submit">Salvar</button>
+            </form>
+        {% else %}
+            <p><a href="{{ url_for('login') }}">Faça login</a> para adicionar produtos.</p>
+        {% endif %}   
 </body>
 </html>
