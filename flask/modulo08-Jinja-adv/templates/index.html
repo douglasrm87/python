@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Produtos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container"> <!-- Adiciona uma div container para centralizar o conteúdo -->
+        <h1>Bem-vindo ao Sistema de Produtos</h1>
+        <p>Este é um exemplo de sistema de gerenciamento de produtos usando Flask e Jinja
+        <h1>Lista de Produtos</h1>
+
+        <ul>
+            {% for p in produtos %}
+            <li class="{% if p['promocao'] %}promocao{% endif %}">
+                {{ p['nome'] }} - R$ {{ "%.2f"|format(p['preco']) }}
+                {% if p['promocao'] %} <strong>(Promoção!)</strong> {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+        
+        
+         
+        <a href="{{ url_for('add_product') }}">Adicionar Produto</a>
+        {% if session.get('user_id') %}
+            <a href="{{ url_for('logout') }}">Logout</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Login</a>
+        {% endif %}
+         <a href="{{ url_for('register') }}">Criar novo usuário</a>
+         <button onclick="mensagem()">Clique Aqui</button>
+    </div>
+    
+    <script>
+        function mensagem() {
+            alert("Obrigado por visitar!");
+        }
+    </script>
+</body>
+</html>
