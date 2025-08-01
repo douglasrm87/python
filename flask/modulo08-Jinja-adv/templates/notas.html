@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <title>Gestão de notas Faculdade</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <meta charset="UTF-8">
+        <script>
+            function limparResultado() {
+                console.log("Resultado limpo");
+                var minhaVariavelFlask = "{{resultado }}"; // Variável do Flask";
+
+                console.log("Antes: " + minhaVariavelFlask); // Imprime "Olá, mundo!" no console
+                 
+            }
+            
+        </script>
+    </head>
+    <body >
+        <div class="container">
+            <h1>Gestão de notas Faculdade</h1>        
+            <form method="get" >
+                <p>Insira as notas para calcular a média:</p>
+                <p>As notas devem ser inseridas no formato decimal (ex: 7.5)</p>
+                <label>Nota SM1 (0-10):</label>
+                <input type="number" name="SM1" min="0" max="10" step="0.1" onclick="limparResultado()">
+                <label>Nota SM2 (0-10): </label>
+                <input type="number" name="SM2" min="0" max="10" step="0.1" onclick="limparResultado()">
+                <label>Nota AV (0-100): </label>
+                <input type="number" name="AV" min="0" max="100" step="0.5" onclick="limparResultado()">
+                <button type="submit" >Calcular</button>
+            </form>
+            {% if media %}
+                <h2>Média: {{ media }}</h2>
+            {% else %}
+                <h2>Por favor, insira as notas para calcular a média.</h2>
+            {% endif %}        
+            {% if resultado %}
+                <h1> {{resultado}} com média {{media}}!!! </h1>
+            {% endif %}   
+            
+            <p>Desenvolvido por <a href="https://github.com/douglasrm87">Douglas Mendes</a></p>
+        </div>
+    </body>
+ 
+
+</html>

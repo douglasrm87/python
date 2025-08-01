@@ -177,5 +177,13 @@ a:active {
     margin-top: 10px;
     text-align: center;
 }
-
+footer {
+    background-color: #2b6cb0;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    border-radius: 0 0 12px 12px;
+    margin-top: 20px;
+    flex-direction: column;
+}
 
