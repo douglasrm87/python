@@ -3,7 +3,8 @@
     <title>Gestão de notas Faculdade</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <meta charset="UTF-8">
-    <script>
+
+    <!-- <script>
         function limparResultado() {
             console.log("Resultado limpo");
 
@@ -14,8 +15,9 @@
             if (resultadoEl) resultadoEl.style.display = "none";
             if (mediaEl) mediaEl.style.display = "none";
         }
-    </script>
+    </script> -->
 </head>
+<script src="{{ url_for('static', filename='javascript/notas.js') }}"></script>
 <body>
     <div class="container">
         <h1>Gestão de notas Faculdade</h1>        
