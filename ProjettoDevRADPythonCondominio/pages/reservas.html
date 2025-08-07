@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservas - Smart Condo</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="dashboard-page">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="../images/logo_condominio.png" alt="Smart Condo" class="sidebar-logo">
+            <h3>Smart Condo</h3>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="dashboard.html" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a href="reservas.html" class="nav-link">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Reservas</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="financeiro.html" class="nav-link">
+                        <i class="fas fa-dollar-sign"></i>
+                        <span>Financeiro</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="manutencao.html" class="nav-link">
+                        <i class="fas fa-tools"></i>
+                        <span>Manutenção</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="comunicacao.html" class="nav-link">
+                        <i class="fas fa-comments"></i>
+                        <span>Comunicação</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="configuracoes.html" class="nav-link">
+                        <i class="fas fa-cog"></i>
+                        <span>Configurações</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-details">
+                    <span class="user-name" id="userName">João Silva</span>
+                    <span class="user-role" id="userRole">Morador</span>
+                </div>
+            </div>
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Sair</span>
+            </button>
+        </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="main-header">
+            <div class="header-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1>Reservas</h1>
+            </div>
+            
+            <div class="header-right">
+                <div class="weather-widget">
+                    <i class="fas fa-sun"></i>
+                    <span>25°C</span>
+                </div>
+                
+                <div class="user-menu">
+                    <button class="user-menu-btn" id="userMenuBtn">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span class="user-name">João Silva</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Content -->
+        <div class="dashboard-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-calendar-check"></i> Sistema de Reservas</h3>
+                </div>
+                <div class="card-content">
+                    <p>Esta página está em desenvolvimento. Em breve você poderá:</p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Visualizar áreas comuns disponíveis</li>
+                        <li>Fazer reservas online</li>
+                        <li>Consultar suas reservas</li>
+                        <li>Cancelar reservas</li>
+                        <li>Ver calendário de disponibilidade</li>
+                    </ul>
+                    
+                    <div style="margin-top: 30px;">
+                        <button class="btn btn-primary" onclick="showToast('Funcionalidade em desenvolvimento', 'info')">
+                            <i class="fas fa-plus"></i>
+                            Nova Reserva
+                        </button>
+                        <button class="btn btn-secondary" onclick="showToast('Funcionalidade em desenvolvimento', 'info')">
+                            <i class="fas fa-calendar"></i>
+                            Ver Calendário
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script src="../js/auth.js"></script>
+    <script src="../js/dashboard.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../data/mock-data.js"></script>
+</body>
+</html>
+

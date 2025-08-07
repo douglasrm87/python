@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Condo - Sistema de Gestão Condominial</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-left">
+            <div class="login-content">
+                <div class="logo-section">
+                    <img src="images/logo_condominio.png" alt="Smart Condo Logo" class="logo">
+                    <h1>Smart Condo</h1>
+                    <p>Sistema Inteligente de Gestão Condominial</p>
+                </div>
+                
+                <form class="login-form" id="loginForm">
+                    <div class="form-group">
+                        <label for="email">Email ou CPF</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="email" name="email" placeholder="Digite seu email ou CPF" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Senha</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
+                            <button type="button" class="toggle-password" onclick="togglePassword()">
+                                <i class="fas fa-eye" id="toggleIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-options">
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" id="remember">
+                            <span class="checkmark"></span>
+                            Lembrar-me
+                        </label>
+                        <a href="#" class="forgot-password">Esqueceu a senha?</a>
+                    </div>
+                    
+                    <button type="submit" class="btn-login">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Entrar
+                    </button>
+                </form>
+                
+                <div class="demo-accounts">
+                    <h3>Contas de Demonstração</h3>
+                    <div class="demo-buttons">
+                        <button class="demo-btn" onclick="loginDemo('morador')">
+                            <i class="fas fa-user"></i>
+                            Morador
+                        </button>
+                        <button class="demo-btn" onclick="loginDemo('sindico')">
+                            <i class="fas fa-user-tie"></i>
+                            Síndico
+                        </button>
+                        <button class="demo-btn" onclick="loginDemo('admin')">
+                            <i class="fas fa-user-shield"></i>
+                            Admin
+                        </button>
+                        <button class="demo-btn" onclick="loginDemo('porteiro')">
+                            <i class="fas fa-door-open"></i>
+                            Porteiro
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="login-right">
+            <div class="hero-content">
+                <h2>Bem-vindo ao futuro da gestão condominial</h2>
+                <div class="features">
+                    <div class="feature">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h3>Acesso Mobile</h3>
+                        <p>Gerencie seu condomínio de qualquer lugar</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Segurança Total</h3>
+                        <p>Controle de acesso e monitoramento 24h</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Relatórios Inteligentes</h3>
+                        <p>Análises e insights para melhor gestão</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-calendar-check"></i>
+                        <h3>Reservas Online</h3>
+                        <p>Reserve áreas comuns com facilidade</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Entrando no sistema...</p>
+        </div>
+    </div>
+    
+    <script src="js/auth.js"></script>
+    <script src="js/login.js"></script>
+</body>
+</html>
+

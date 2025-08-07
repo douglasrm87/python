@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Smart Condo</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="dashboard-page">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="../images/logo_condominio.png" alt="Smart Condo" class="sidebar-logo">
+            <h3>Smart Condo</h3>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <ul class="nav-menu">
+                <li class="nav-item active">
+                    <a href="dashboard.html" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="moradores.html" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        <span>Moradores</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="reservas.html" class="nav-link">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Reservas</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="financeiro.html" class="nav-link">
+                        <i class="fas fa-dollar-sign"></i>
+                        <span>Financeiro</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="manutencao.html" class="nav-link">
+                        <i class="fas fa-tools"></i>
+                        <span>Manutenção</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="seguranca.html" class="nav-link">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Segurança</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="comunicacao.html" class="nav-link">
+                        <i class="fas fa-comments"></i>
+                        <span>Comunicação</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="configuracoes.html" class="nav-link">
+                        <i class="fas fa-cog"></i>
+                        <span>Configurações</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-details">
+                    <span class="user-name" id="userName">João Silva</span>
+                    <span class="user-role" id="userRole">Morador</span>
+                </div>
+            </div>
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Sair</span>
+            </button>
+        </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="main-header">
+            <div class="header-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1>Dashboard</h1>
+            </div>
+            
+            <div class="header-right">
+                <div class="weather-widget">
+                    <i class="fas fa-sun"></i>
+                    <span>25°C</span>
+                </div>
+                
+                <div class="notifications">
+                    <button class="notification-btn" id="notificationBtn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </button>
+                    
+                    <div class="notification-dropdown" id="notificationDropdown">
+                        <div class="notification-header">
+                            <h4>Notificações</h4>
+                            <button class="mark-all-read">Marcar todas como lidas</button>
+                        </div>
+                        <div class="notification-list">
+                            <div class="notification-item unread">
+                                <i class="fas fa-exclamation-circle text-warning"></i>
+                                <div class="notification-content">
+                                    <p>Manutenção do elevador agendada</p>
+                                    <small>Há 2 horas</small>
+                                </div>
+                            </div>
+                            <div class="notification-item unread">
+                                <i class="fas fa-dollar-sign text-success"></i>
+                                <div class="notification-content">
+                                    <p>Taxa condominial paga com sucesso</p>
+                                    <small>Há 1 dia</small>
+                                </div>
+                            </div>
+                            <div class="notification-item">
+                                <i class="fas fa-calendar-check text-info"></i>
+                                <div class="notification-content">
+                                    <p>Reserva da churrasqueira confirmada</p>
+                                    <small>Há 2 dias</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="user-menu">
+                    <button class="user-menu-btn" id="userMenuBtn">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span class="user-name">João Silva</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="perfil.html" class="dropdown-item">
+                            <i class="fas fa-user"></i>
+                            Meu Perfil
+                        </a>
+                        <a href="configuracoes.html" class="dropdown-item">
+                            <i class="fas fa-cog"></i>
+                            Configurações
+                        </a>
+                        <hr class="dropdown-divider">
+                        <button class="dropdown-item" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Sair
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            <!-- Welcome Section -->
+            <section class="welcome-section">
+                <div class="welcome-card">
+                    <div class="welcome-text">
+                        <h2>Bem-vindo de volta, <span id="welcomeUserName">João</span>!</h2>
+                        <p>Aqui está um resumo das atividades do seu condomínio hoje.</p>
+                    </div>
+                    <div class="welcome-actions">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-calendar-plus"></i>
+                            Nova Reserva
+                        </button>
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-tools"></i>
+                            Solicitar Manutenção
+                        </button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Stats Cards -->
+            <section class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>150</h3>
+                            <p>Total de Unidades</p>
+                        </div>
+                        <div class="stat-trend positive">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>2%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>320</h3>
+                            <p>Moradores Ativos</p>
+                        </div>
+                        <div class="stat-trend positive">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>5%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>R$ 12.500</h3>
+                            <p>Arrecadação Mensal</p>
+                        </div>
+                        <div class="stat-trend negative">
+                            <i class="fas fa-arrow-down"></i>
+                            <span>3%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>15</h3>
+                            <p>Solicitações Abertas</p>
+                        </div>
+                        <div class="stat-trend neutral">
+                            <i class="fas fa-minus"></i>
+                            <span>0%</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Main Dashboard Grid -->
+            <section class="dashboard-grid">
+                <!-- Recent Activities -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>Atividades Recentes</h3>
+                        <button class="btn-link">Ver todas</button>
+                    </div>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-calendar-check text-success"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p><strong>Maria Santos</strong> reservou a churrasqueira</p>
+                                <small>Há 30 minutos</small>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-tools text-warning"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p><strong>Carlos Lima</strong> solicitou manutenção no elevador</p>
+                                <small>Há 1 hora</small>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-dollar-sign text-success"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p><strong>Ana Costa</strong> efetuou pagamento da taxa</p>
+                                <small>Há 2 horas</small>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-user-plus text-info"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p><strong>Pedro Oliveira</strong> foi cadastrado como novo morador</p>
+                                <small>Há 3 horas</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Actions -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>Ações Rápidas</h3>
+                    </div>
+                    <div class="quick-actions">
+                        <button class="quick-action-btn">
+                            <i class="fas fa-calendar-plus"></i>
+                            <span>Nova Reserva</span>
+                        </button>
+                        
+                        <button class="quick-action-btn">
+                            <i class="fas fa-tools"></i>
+                            <span>Manutenção</span>
+                        </button>
+                        
+                        <button class="quick-action-btn">
+                            <i class="fas fa-user-plus"></i>
+                            <span>Novo Morador</span>
+                        </button>
+                        
+                        <button class="quick-action-btn">
+                            <i class="fas fa-bullhorn"></i>
+                            <span>Novo Aviso</span>
+                        </button>
+                        
+                        <button class="quick-action-btn">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                            <span>Gerar Boleto</span>
+                        </button>
+                        
+                        <button class="quick-action-btn">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Relatórios</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Upcoming Events -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>Próximos Eventos</h3>
+                        <button class="btn-link">Ver calendário</button>
+                    </div>
+                    <div class="events-list">
+                        <div class="event-item">
+                            <div class="event-date">
+                                <span class="day">15</span>
+                                <span class="month">JUL</span>
+                            </div>
+                            <div class="event-content">
+                                <h4>Assembleia Geral</h4>
+                                <p>Discussão sobre melhorias no condomínio</p>
+                                <small><i class="fas fa-clock"></i> 19:00</small>
+                            </div>
+                        </div>
+                        
+                        <div class="event-item">
+                            <div class="event-date">
+                                <span class="day">18</span>
+                                <span class="month">JUL</span>
+                            </div>
+                            <div class="event-content">
+                                <h4>Manutenção Preventiva</h4>
+                                <p>Limpeza da caixa d'água</p>
+                                <small><i class="fas fa-clock"></i> 08:00</small>
+                            </div>
+                        </div>
+                        
+                        <div class="event-item">
+                            <div class="event-date">
+                                <span class="day">22</span>
+                                <span class="month">JUL</span>
+                            </div>
+                            <div class="event-content">
+                                <h4>Festa Julina</h4>
+                                <p>Confraternização dos moradores</p>
+                                <small><i class="fas fa-clock"></i> 18:00</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Financial Summary -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>Resumo Financeiro</h3>
+                        <select class="period-select">
+                            <option>Este mês</option>
+                            <option>Último mês</option>
+                            <option>Este ano</option>
+                        </select>
+                    </div>
+                    <div class="financial-summary">
+                        <div class="financial-item">
+                            <div class="financial-label">
+                                <i class="fas fa-arrow-up text-success"></i>
+                                <span>Receitas</span>
+                            </div>
+                            <div class="financial-value success">R$ 45.200</div>
+                        </div>
+                        
+                        <div class="financial-item">
+                            <div class="financial-label">
+                                <i class="fas fa-arrow-down text-error"></i>
+                                <span>Despesas</span>
+                            </div>
+                            <div class="financial-value error">R$ 32.800</div>
+                        </div>
+                        
+                        <div class="financial-item">
+                            <div class="financial-label">
+                                <i class="fas fa-wallet text-info"></i>
+                                <span>Saldo</span>
+                            </div>
+                            <div class="financial-value info">R$ 12.400</div>
+                        </div>
+                        
+                        <div class="financial-chart">
+                            <canvas id="financialChart" width="300" height="150"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <script src="../js/auth.js"></script>
+    <script src="../js/dashboard.js"></script>
+    <script src="../js/utils.js"></script>
+</body>
+</html>
+
