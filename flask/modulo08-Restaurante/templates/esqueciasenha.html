@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <title>Esqueci a Senha</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Google Fonts para uma aparência moderna -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet">
+        <!-- Estilos modernos com CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/esqueciasenha.css') }}">
+        <!-- Importar arquivo JavaScript -->
+        <script src="{{ url_for('static', filename='js/esqueciasenha.js') }}"></script>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Recuperar Senha</h2>
+            <form id="forgotPasswordForm" onsubmit="return sendRecoveryEmail();">
+                <label for="email">Digite seu e-mail cadastradooo:</label>
+                <input type="email" id="email" name="email" required placeholder="seuemail@exemplo.com">
+                <button type="submit">Enviar link de recuperação</button>
+                <div class="message" id="message"></div>
+                <a href="{{ url_for('login') }}" class="forgot-password">Voltar para login.</a>
+            </form>
+        </div>
+    </body>
+</html>

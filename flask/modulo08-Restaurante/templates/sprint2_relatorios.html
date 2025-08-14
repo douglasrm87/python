@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Relatórios Gerenciais{% endblock %}
+
+{% block content %}
+<header class="panel-header">
+    <h1>Dashboard de Relatórios</h1>
+</header>
+<main class="reports-dashboard">
+    <div class="report-card">
+        <h3>Faturamento (Período)</h3>
+        <p style="font-size: 2em; font-weight: bold; color: var(--secondary-color);">R$ 28.450,70</p>
+    </div>
+    <div class="report-card">
+        <h3>Vendas por Pagamento</h3>
+        <p>Crédito: 55%</p>
+        <p>Débito: 25%</p>
+        <p>PIX/Dinheiro: 20%</p>
+    </div>
+    <div class="report-card" style="grid-column: 1 / -1;">
+        <h3>Pratos Mais Vendidos</h3>
+        <canvas id="topSellersChart"></canvas>
+    </div>
+</main>
+{% endblock %}

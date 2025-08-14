@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Mapa de Mesas{% endblock %}
+
+{% block content %}
+<header class="panel-header">
+    <h1>Mapa de Mesas</h1>
+</header>
+<nav class="mapa-mesas-grid">
+    <a href="{{ url_for('fazer_pedido', id_mesa=1) }}" class="mesa livre">
+        <span>01</span>
+        <span class="status">Livre</span>
+    </a>
+    <a href="{{ url_for('fazer_pedido', id_mesa=2) }}" class="mesa ocupada">
+        <span>02</span>
+        <span class="status">Ocupada</span>
+    </a>
+    <a href="{{ url_for('fazer_pedido', id_mesa=3) }}" class="mesa livre">
+        <span>03</span>
+        <span class="status">Livre</span>
+    </a>
+    <a href="{{ url_for('fazer_pedido', id_mesa=4) }}" class="mesa reservada">
+        <span>04</span>
+        <span class="status">Reservada</span>
+    </a>
+    <a href="{{ url_for('fazer_pedido', id_mesa=5) }}" class="mesa livre"><span>05</span><span class="status">Livre</span></a>
+     <a href="{{ url_for('fazer_pedido', id_mesa=6) }}" class="mesa ocupada"><span>06</span><span class="status">Ocupada</span></a>
+     <a href="{{ url_for('fazer_pedido', id_mesa=7) }}" class="mesa ocupada"><span>07</span><span class="status">Ocupada</span></a>
+     <a href="{{ url_for('fazer_pedido', id_mesa=8) }}" class="mesa livre"><span>08</span><span class="status">Livre</span></a>
+</nav>
+{% endblock %}
