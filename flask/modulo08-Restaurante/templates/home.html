@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Painel de Controle{% endblock %}
+
+{% block content %}
+<!-- 
+Agindo como um webdesigner, peço para criar 
+Criar uma página home que contenha um cabeçalho, um título, um carrossel com imagens e um link para as funcionalidades do Backlog.
+Para cada opção do backlog quando clicado direcionar as páginas html respectivas a opção escolhida.
+Usar as tecnologias html5, css3, javascript e flask.
+Criar uma interface gráfica moderna com boa distribuição dos itens que realmente empolgue o usuário.
+-->
+<header class="main-header">
+    <div class="logo-container">
+        <img src="https://ix-marketing.imgix.net/autocompress.png?auto=format,compress&w=1946" alt="Logo Gestão de Restaurante" class="header-logo" style="object-fit:cover; border-radius:8px;">
+        <span>Gestão de Restaurante</span>
+    </div>
+    <div class="user-profile">
+        <span>Bem-vindo, Admin!</span>
+        <img src="https://ix-marketing.imgix.net/autotagging.png?auto=format,compress&w=1946" alt="Avatar do Usuário" class="user-avatar">
+    </div>
+</header>
+
+<main class="home-content">
+    <section class="hero-carousel">
+        <div class="carousel-wrapper">
+            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600');">
+                <div class="slide-caption">
+                    <h2>Controle Total, Sabor Inigualável</h2>
+                    <p>Gerencie cada detalhe do seu restaurante com precisão e eficiência.</p>
+                </div>
+            </div>
+            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600');">
+                 <div class="slide-caption">
+                    <h2>Organização que Inspira</h2>
+                    <p>Desde o salão até a cozinha, otimize todos os seus processos.</p>
+                </div>
+            </div>
+            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600');">
+                 <div class="slide-caption">
+                    <h2>Decisões Baseadas em Dados</h2>
+                    <p>Nossos relatórios transformam números em estratégias de sucesso.</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control prev">&lt;</button>
+        <button class="carousel-control next">&gt;</button>
+        <div class="carousel-dots"></div>
+    </section>
+
+    <section class="features-section">
+        <h2 class="section-title">Acesso Rápido</h2>
+        <div class="features-grid">
+            <a href="{{ url_for('mapa_mesas') }}" class="feature-card">
+                <div class="card-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9"/><path d="M9 22V12h6v10"/><path d="M2 10.6L12 2l10 8.6"/></svg>
+                </div>
+                <h3>Salão e Mesas</h3>
+                <p>Visualize a ocupação e gerencie o fluxo do salão em tempo real.</p>
+            </a>
+
+            <a href="{{ url_for('caixa') }}" class="feature-card">
+                <div class="card-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2"/><path d="M2 6h20"/><path d="M4 11v7c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2z"/><path d="M10 15h4"/></svg>
+                </div>
+                <h3>Frente de Caixa</h3>
+                <p>Realize fechamentos de conta, pagamentos e controle o fluxo financeiro do dia.</p>
+            </a>
+
+            <a href="{{ url_for('cozinha') }}" class="feature-card">
+                <div class="card-icon">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7H5a7 7 0 0 0 7 7z"/><path d="M12 2v2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M19.07 4.93l-1.41 1.41"/></svg>
+                </div>
+                <h3>Painel da Cozinha</h3>
+                <p>Envie pedidos diretamente para a cozinha e acompanhe o status de preparo.</p>
+            </a>
+
+            <a href="{{ url_for('relatorios') }}" class="feature-card">
+                 <div class="card-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20V14"/></svg>
+                </div>
+                <h3>Relatórios</h3>
+                <p>Analise o desempenho de vendas e tome decisões baseadas em dados.</p>
+            </a>
+        </div>
+    </section>
+</main>
+{% endblock %}

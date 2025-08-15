@@ -14,6 +14,11 @@ def index():
 def login():
     return render_template('login.html')
 
+# NOVA ROTA PARA A HOMEPAGE
+@app.route('/home')
+def home():
+    return render_template('home.html')
+
 # --- SPRINT 1 ---
 @app.route('/mapa-mesas')
 def mapa_mesas():

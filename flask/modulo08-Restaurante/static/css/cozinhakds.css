@@ -1,0 +1,122 @@
+/* static/css/style.css */
+
+/* === ESTILOS DO PAINEL DA COZINHA (KDS) === */
+.kds-page-container {
+    background-color: #34495e;
+    color: var(--white);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.kds-header {
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    height: 60px;
+    background-color: #2c3e50;
+    flex-shrink: 0;
+}
+.kds-header h1 { margin: 0; font-size: 1.5em; }
+.kds-clock { font-size: 1.5em; margin: 0 auto; font-variant-numeric: tabular-nums; }
+.kds-sound-toggle { display: flex; align-items: center; gap: 8px; }
+
+.kds-board {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+    padding: 15px;
+    flex-grow: 1;
+    overflow-x: auto;
+}
+.kds-column {
+    background-color: #46627f;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+.column-title {
+    padding: 15px;
+    margin: 0;
+    font-size: 1.2em;
+    text-align: center;
+    border-bottom: 3px solid var(--color, #fff);
+    text-transform: uppercase;
+}
+.kds-cards-container {
+    padding: 10px;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+/* Estilo do Card (Ticket) */
+.kds-card {
+    background-color: #ecf0f1;
+    color: var(--text-color);
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    border-left: 8px solid #3498db;
+    animation: slideIn 0.3s ease-out;
+}
+@keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.4em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.card-timer {
+    background-color: #bdc3c7;
+    color: var(--text-color);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    transition: background-color 0.5s;
+}
+.card-timer.warning { background-color: #f1c40f; } /* Amarelo */
+.card-timer.late { background-color: #e74c3c; color: var(--white); } /* Vermelho */
+
+.card-items {
+    list-style: none;
+    padding: 0 0 10px 0;
+    margin: 0;
+    font-size: 1.1em;
+}
+.card-items li {
+    padding: 5px 0;
+    border-bottom: 1px dashed #bdc3c7;
+}
+.card-items li:last-child { border-bottom: none; }
+.card-items small {
+    display: block;
+    color: #c0392b;
+    font-style: italic;
+    padding-left: 15px;
+}
+
+.card-actions {
+    margin-top: 10px;
+}
+.btn-card-action {
+    width: 100%;
+    padding: 12px;
+    font-size: 1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+/* Estilo dos Botões por coluna */
+#col-todo .btn-card-action { background-color: #f1c40f; color: var(--text-color); }
+#col-in-progress .btn-card-action { background-color: #2ecc71; color: var(--white); }
+#col-ready .btn-card-action { background-color: #95a5a6; color: var(--white); }
+
+.kds-card.done {
+    animation: fadeOut 0.5s forwards;
+}
+@keyframes fadeOut { to { opacity: 0; height: 0; padding: 0; margin: 0; border: none; } }

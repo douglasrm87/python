@@ -8,6 +8,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/caixa.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cozinhakds.css') }}">
 </head>
 <body>
     <div class="container">
@@ -16,5 +20,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/caixa.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/cozinhakds.js') }}"></script>
 </body>
 </html>

@@ -1,0 +1,59 @@
+<!--
+Agindo como um webdesigner, peço para Criar a página Painel da Cozinha. Esta página será utilizada para o Envio de pedidos pelo garçom diretamente para a cozinha e permitirá o garçom acompanhar o status de preparo.
+Esta página será utilizada pela equipe de cozinha e pelos garçons.
+Usar as tecnologias html5, css3, javascript e flask.
+Criar uma interface gráfica moderna com boa distribuição dos itens que realmente empolgue o usuário.
+
+-->
+{% extends "base.html" %}
+{% block title %}Painel da Cozinha (KDS){% endblock %}
+
+{% block content %}
+<div class="kds-page-container">
+    <header class="kds-header">
+        <h1>Painel da Cozinha</h1>
+        <div class="kds-clock" id="kds-clock">14:55:47</div>
+        <div class="kds-sound-toggle">
+            <label for="sound-check">Notificações Sonoras</label>
+            <input type="checkbox" id="sound-check" checked>
+        </div>
+    </header>
+
+    <main class="kds-board">
+        <section class="kds-column">
+            <h2 class="column-title" style="--color: #3498db;">A FAZER</h2>
+            <div class="kds-cards-container" id="col-todo">
+                </div>
+        </section>
+
+        <section class="kds-column">
+            <h2 class="column-title" style="--color: #f1c40f;">EM PREPARO</h2>
+            <div class="kds-cards-container" id="col-in-progress">
+                </div>
+        </section>
+
+        <section class="kds-column">
+            <h2 class="column-title" style="--color: #2ecc71;">PRONTO PARA RETIRADA</h2>
+            <div class="kds-cards-container" id="col-ready">
+                </div>
+        </section>
+    </main>
+</div>
+
+<template id="kds-card-template">
+    <div class="kds-card" data-start-time="">
+        <div class="card-header">
+            <strong class="card-table">Mesa 00</strong>
+            <span class="card-timer">00:00</span>
+        </div>
+        <ul class="card-items">
+            </ul>
+        <div class="card-actions">
+            <button class="btn-card-action">Iniciar Preparo</button>
+        </div>
+    </div>
+</template>
+
+<audio id="notification-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3" preload="auto"></audio>
+
+{% endblock %}
