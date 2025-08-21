@@ -3,13 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- 
-        Este trecho de código define o título da página HTML utilizando o mecanismo de templates do Jinja2, 
-        que é integrado ao Flask. O bloco `{% block title %}` permite que o título seja sobrescrito 
-        em templates que herdam este arquivo base. Caso nenhum título seja definido no template filho, 
-        o valor padrão "Sistema de Gestão" será exibido. Isso é útil para criar uma estrutura de layout 
-        reutilizável e consistente em aplicações web.
-    -->
+    
     <title>{% block title %}Sistema de Gestão{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,10 +16,7 @@
 </head>
 <body>
     <div class="container">
-        <!-- This line defines a block named 'content' in the base template. 
-            It acts as a placeholder that child templates can override to insert their own content. 
-            The {% block %} and {% endblock %} tags are part of Jinja2 templating syntax, 
-            commonly used in Flask applications for creating reusable and modular HTML templates. -->
+       
         {% block content %}{% endblock %}
     </div>
 

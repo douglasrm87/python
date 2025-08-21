@@ -7,6 +7,7 @@ app = Flask(__name__)
 # Rota principal redireciona para o login
 @app.route('/')
 def index():
+    #return  "<h1>Rota principal acessada, redirecionando para o login... </h1>"
     return redirect(url_for('login'))
 
 # Rota de Login
