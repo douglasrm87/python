@@ -8,6 +8,14 @@ Ele permite que diferentes partes do seu código Flask acessem e modifiquem os m
 Limpeza Automática:
 Ao final de cada requisição, o conteúdo de g é automaticamente limpo, garantindo que dados de requisições anteriores não interfiram em novas requisições. 
 
+Rodar - python app.py
+Acesse - http://127.0.0.1:5000/
+# Usuário e senha padrão não são definidos no código.
+# Você deve registrar um novo usuário acessando /register e criando seu próprio login e senha.
+
+Já criei:
+    usuário: admin 
+    senha:12345
 '''
 
 from flask import Flask, render_template, request, redirect, url_for, session    
@@ -18,15 +26,22 @@ app = Flask(__name__)
 app.secret_key = 'minha_chave_secreta'
 
 DATABASE = 'database.db'
-
+'''
+ 
+ 
+O objeto g é uma variável global do Flask usada para armazenar dados durante o ciclo de vida de uma requisição.
+getattr verifica se já existe uma conexão aberta.
+Se não existir, cria uma nova conexão e salva em g para evitar múltiplas conexões.
+row_factory facilita o acesso aos dados retornados pelo banco.
+Se quiser explicações mais detalhadas sobre algum ponto, só pedir!
+'''
 def get_db():
-    db = getattr(g, '_database', None)  # Use g to store the database connection
-    if db is None:  # Check if the database connection already exists
-        db = g._database = sqlite3.connect(DATABASE) # Connect to the database
-        db.row_factory = sqlite3.Row # Set row factory to return rows as dictionaries
-                                        # This allows us to access columns by name
+    db = getattr(g, '_database', None)  # Usa o objeto 'g' para recuperar a conexão do banco de dados, se já existir. Se não existir, retorna None.
+    if db is None:  # Verifica se a conexão ainda não foi criada.
+        db = g._database = sqlite3.connect(DATABASE) # Cria uma nova conexão com o banco de dados e armazena em 'g._database' para reutilização.
+        db.row_factory = sqlite3.Row # Configura a conexão para retornar linhas como objetos do tipo 'Row', permitindo acesso por nome de coluna.
     return db
-
+    
 @app.teardown_appcontext
 def close_connection(exception):
     db = getattr(g, '_database', None)
@@ -132,5 +147,5 @@ def delete_product(id):
 
 
 if __name__ == "__main__":
-    init_db()
+    init_db() # Initialize the database, cria as tabelas se não existirem
     app.run(host='127.0.0.1', port=8081,debug=True, use_reloader=True)
