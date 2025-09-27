@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Painel - Banco Online{% endblock %}
+
+{% block content %}
+<div class="card balance-card">
+    <h2>Saldo da Conta</h2>
+    <div class="balance-amount">R${{ "%.2f"|format(current_user.balance) }}</div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+    <div class="card">
+        <h3 style="margin-bottom: 1rem;">Fazer Depósito</h3>
+        <form method="POST" action="{{ url_for('deposit') }}">
+            <div class="form-group">
+                <label for="deposit-amount">Valor</label>
+                <input type="number" class="form-control" id="deposit-amount" name="amount" step="0.01" min="0.01" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Depositar</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h3 style="margin-bottom: 1rem;">Fazer Saque</h3>
+        <form method="POST" action="{{ url_for('withdraw') }}">
+            <div class="form-group">
+                <label for="withdraw-amount">Valor</label>
+                <input type="number" class="form-control" id="withdraw-amount" name="amount" step="0.01" min="0.01" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Sacar</button>
+        </form>
+    </div>
+</div>
+
+<div class="card" style="margin-top: 1.5rem;">
+    <h3 style="margin-bottom: 1rem;">Transações Recentes</h3>
+    <div class="transaction-list">
+        {% for transaction in current_user.transactions[-5:]|reverse %}
+        <div class="transaction-item">
+            <div>
+                <div class="transaction-type">{{ transaction.transaction_type|title }}</div>
+                <div class="transaction-date">{{ transaction.timestamp.strftime('%d/%m/%Y %H:%M:%S') }}</div>
+            </div>
+            <div class="transaction-amount {{ transaction.transaction_type }}">
+                {% if transaction.transaction_type == 'deposit' %}+{% else %}-{% endif %}
+                R${{ "%.2f"|format(transaction.amount) }}
+            </div>
+        </div>
+        {% else %}
+        <p>Sem transações recentes</p>
+        {% endfor %}
+    </div>
+    <div style="margin-top: 1rem;">
+        <a href="{{ url_for('transactions') }}" class="btn btn-primary">Ver Todas as Transações</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome - Online Banking{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1 style="text-align: center; margin-bottom: 2rem;">Welcome to Online Banking</h1>
+    <p style="text-align: center; margin-bottom: 2rem;">Manage your money with our secure and easy-to-use banking platform.</p>
+    
+    {% if not current_user.is_authenticated %}
+    <div style="display: flex; justify-content: center; gap: 1rem;">
+        <a href="{{ url_for('login') }}" class="btn btn-primary">Login</a>
+        <a href="{{ url_for('register') }}" class="btn btn-primary" style="background-color: var(--secondary-color);">Register</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

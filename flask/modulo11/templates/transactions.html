@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Histórico de Transações - Banco Online{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2 style="margin-bottom: 1.5rem;">Histórico de Transações</h2>
+    <div class="transaction-list">
+        {% for transaction in transactions %}
+        <div class="transaction-item">
+            <div>
+                <div class="transaction-type">
+                    {% if transaction.transaction_type == 'deposit' %}
+                        Depósito
+                    {% elif transaction.transaction_type == 'withdrawal' %}
+                        Saque
+                    {% else %}
+                        {{ transaction.transaction_type|title }}
+                    {% endif %}
+                </div>
+                <div class="transaction-date">{{ transaction.timestamp.strftime('%d/%m/%Y %H:%M:%S') }}</div>
+            </div>
+            <div class="transaction-amount {{ transaction.transaction_type }}">
+                {% if transaction.transaction_type == 'deposit' %}+{% else %}-{% endif %}
+                R$ {{ "%.2f"|format(transaction.amount) }}
+            </div>
+        </div>
+        {% else %}
+        <p>Nenhuma transação encontrada</p>
+        {% endfor %}
+    </div>
+    <div style="margin-top: 1rem;">
+        <a href="{{ url_for('dashboard') }}" class="btn btn-primary">Voltar para o Painel</a>
+    </div>
+</div>
+{% endblock %}
