@@ -5,6 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 
 '''
+Com banco de dados e arquivo
 usuário - admin
 senha - 12345
 python app.py
@@ -125,6 +126,83 @@ def withdraw():
 def transactions():
     transactions = Transaction.query.filter_by(user_id=current_user.id).order_by(Transaction.timestamp.desc()).all()
     return render_template('transactions.html', transactions=transactions)
+
+@app.route('/export_transactions')
+@login_required
+def export_transactions():
+    transactions = Transaction.query.filter_by(user_id=current_user.id).order_by(Transaction.timestamp.desc()).all()
+    
+    filename = f'transactions_{current_user.username}_{datetime.now().strftime("%Y%m%d_%H%M%S")}.txt'
+    filepath = f'static/exports/{filename}'
+    
+    # Ensure exports directory exists
+    import os
+    os.makedirs('static/exports', exist_ok=True)
+    
+    with open(filepath, 'w') as f:
+        f.write(f"Transaction History for {current_user.username}\n")
+        f.write("=" * 50 + "\n\n")
+        for t in transactions:
+            f.write(f"Date: {t.timestamp.strftime('%Y-%m-%d %H:%M:%S')}\n")
+            f.write(f"Type: {t.transaction_type}\n")
+            f.write(f"Amount: ${t.amount:.2f}\n")
+            f.write("-" * 30 + "\n")
+    
+    return redirect(url_for('static', filename=f'exports/{filename}'))
+
+@app.route('/import_transactions', methods=['POST'])
+@login_required
+def import_transactions():
+    if 'file' not in request.files:
+        flash('No file provided')
+        return redirect(url_for('transactions'))
+    
+    file = request.files['file']
+    if file.filename == '':
+        flash('No file selected')
+        return redirect(url_for('transactions'))
+    
+    try:
+        content = file.read().decode('utf-8').split('\n')
+        current_transaction = {}
+        imported_count = 0
+        
+        for line in content:
+            line = line.strip()
+            if line.startswith('Date:'):
+                if current_transaction and len(current_transaction) == 3:
+                    # Process complete transaction
+                    transaction = Transaction(
+                        amount=float(current_transaction['amount'].replace('$', '')),
+                        transaction_type=current_transaction['type'],
+                        timestamp=datetime.strptime(current_transaction['date'], '%Y-%m-%d %H:%M:%S'),
+                        user_id=current_user.id
+                    )
+                    db.session.add(transaction)
+                    imported_count += 1
+                current_transaction = {'date': line[6:].strip()}
+            elif line.startswith('Type:'):
+                current_transaction['type'] = line[6:].strip()
+            elif line.startswith('Amount:'):
+                current_transaction['amount'] = line[8:].strip()
+        
+        # Process last transaction if complete
+        if current_transaction and len(current_transaction) == 3:
+            transaction = Transaction(
+                amount=float(current_transaction['amount'].replace('$', '')),
+                transaction_type=current_transaction['type'],
+                timestamp=datetime.strptime(current_transaction['date'], '%Y-%m-%d %H:%M:%S'),
+                user_id=current_user.id
+            )
+            db.session.add(transaction)
+            imported_count += 1
+        
+        db.session.commit()
+        flash(f'Successfully imported {imported_count} transactions')
+    except Exception as e:
+        flash(f'Error importing transactions: {str(e)}')
+    
+    return redirect(url_for('transactions'))
 
 if __name__ == '__main__':
     with app.app_context():

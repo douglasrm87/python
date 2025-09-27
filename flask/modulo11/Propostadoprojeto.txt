@@ -146,3 +146,54 @@ Check if the database file banking.db was created in your project directory
 Verify that all template files are in the correct locations
 Ensure the static folder contains both CSS and JS files
 If you're encountering any specific errors, please share them with me and I'll help you resolve them. What error message are you seeing when you try to run the application?
+
+
+
+Vou adicionar uma funcionalidade para exportar o histórico de transações para um arquivo texto e também permitir importar transações de um arquivo texto. Isso será útil para backup de dados e relatórios.
+
+Primeiro, vou adicionar as novas rotas no arquivo app.py:
+
+Read app.py
+
+Vou adicionar as novas rotas para exportar e importar transações:
+
+app.py+77-0
+Agora, vou atualizar o template transactions.html para incluir os botões de exportar e importar:
+
+Read transactions.html
+
+Vou atualizar o template transactions.html para incluir as novas funcionalidades:
+
+transactions.html+73-1
+Agora você tem uma nova funcionalidade que permite:
+
+Exportar Transações:
+
+Clique no botão "Exportar Transações"
+Um arquivo texto será gerado com todas as suas transações
+O arquivo será salvo com um nome único baseado em seu username e timestamp
+O arquivo será automaticamente baixado
+Importar Transações:
+
+Clique no botão "Importar Transações"
+Selecione um arquivo texto no formato correto
+O sistema importará as transações do arquivo
+As transações serão adicionadas ao seu histórico
+O formato do arquivo de exportação/importação é:
+
+A funcionalidade foi implementada com as seguintes características:
+
+Uso de arquivos texto para armazenamento permanente
+Interface amigável integrada ao sistema existente
+Validação de formato do arquivo de importação
+Feedback visual para o usuário sobre o sucesso ou falha das operações
+Modal de ajuda explicando o formato do arquivo
+Armazenamento organizado dos arquivos exportados em uma pasta específica
+Para testar:
+
+Faça algumas transações (depósitos e saques)
+Vá para a página de transações
+Clique em "Exportar Transações" para baixar o arquivo
+Você pode editar o arquivo (mantendo o formato) ou criar um novo
+Use o botão "Importar Transações" para carregar o arquivo
+O sistema manterá a consistência do banco de dados e fornecerá feedback sobre o sucesso ou falha da importação.
