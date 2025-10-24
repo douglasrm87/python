@@ -1,0 +1,10 @@
+Matricula: 102030;AV1:60;AV1 ajustada:70
+Matricula: 112030;AV1:50;AV1 ajustada:60
+Matricula: 122030;AV1:20;AV1 ajustada:30
+Matricula: 132030;AV1:75;AV1 ajustada:85
+Matricula: 142030;AV1:85;AV1 ajustada:95
+Matricula: 152030;AV1:60;AV1 ajustada:70
+Matricula: 162030;AV1:50;AV1 ajustada:60
+Matricula: 172030;AV1:50;AV1 ajustada:60
+Matricula: 182030;AV1:75;AV1 ajustada:85
+Matricula: 192030;AV1:85;AV1 ajustada:95
