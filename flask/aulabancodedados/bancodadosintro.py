@@ -1,21 +1,34 @@
-#python3 -m venv venv && source venv/bin/activate && pip install --upgrade pip psycopg2-binary
-#pip install psycopg2-binary
-import psycopg2
-con = psycopg2.connect(host='localhost', database='postgres',
-user='postgres', password='12345')
+# Usando SQLite3, que já vem instalado com o Python
+import sqlite3
+import os
+
+# Criar o diretório para o banco de dados se não existir
+os.makedirs('data', exist_ok=True)
+
+# Conectar ao banco SQLite (será criado se não existir)
+con = sqlite3.connect('data/banco_cidades.db')
 cur = con.cursor()
-#sql = 'drop table cidade'
-#cur.execute(sql)
-sql = 'create table cidade (id serial primary key, nome varchar(100), uf varchar(2))'
+           
+# Apagar tabela se existir e criar nova
+cur.execute('DROP TABLE IF EXISTS cidade')
+sql = '''CREATE TABLE cidade (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome TEXT,
+    uf TEXT
+)'''
 cur.execute(sql)
-sql = "insert into cidade values (default,'Sao Paulo','SP')"
-cur.execute(sql)
-sql = "insert into cidade values (default,'Curitiba','PR')"
-cur.execute(sql)
-sql = "insert into cidade values (default,'Florianopolis','SC')"
-cur.execute(sql)
+
+# Inserir dados
+cidades = [
+    ('Sao Paulo', 'SP'),
+    ('Curitiba', 'PR'),
+    ('Florianopolis', 'SC')
+]
+cur.executemany('INSERT INTO cidade (nome, uf) VALUES (?, ?)', cidades)
 con.commit()
-cur.execute('select * from cidade')
+
+# Consultar dados
+cur.execute('SELECT * FROM cidade')
 vetor = cur.fetchall()
 print ("Conteudo do vetor:",vetor)
 print ("Tamanho do vetor:",len(vetor))
