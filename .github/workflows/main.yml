@@ -1,49 +1,51 @@
 name: Flask CI
 
 on:
-push:
-branches: ["main"]
-pull_request:
-branches: ["main"]
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
 
 jobs:
-build:
-runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-steps:
-# Baixa o código do repositório
-- name: Checkout do código
-  uses: actions/checkout@v4
+    steps:
+      # Baixa o código do repositório
+      - name: Checkout do código
+        uses: actions/checkout@v4
 
-# Configura Python (versão única para evitar conflitos)
-- name: Configurar Python
-  uses: actions/setup-python@v5
-  with:
-    python-version: "3.10"
+      # Configura Python
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
 
-# Atualiza pip
-- name: Atualizar pip
-  run: python -m pip install --upgrade pip
+      # Atualiza pip
+      - name: Atualizar pip
+        run: python -m pip install --upgrade pip
 
-# Instala dependências do projeto
-- name: Instalar dependências
-  run: |
-    if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      # Instala dependências
+      - name: Instalar dependências
+        run: |
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          fi
 
-# Define variáveis de ambiente necessárias para Flask
-- name: Configurar variáveis de ambiente
-  run: |
-    echo "FLASK_APP=app.py" >> $GITHUB_ENV
-    echo "FLASK_ENV=testing" >> $GITHUB_ENV
+      # Variáveis de ambiente do Flask
+      - name: Configurar variáveis de ambiente
+        run: |
+          echo "FLASK_APP=app.py" >> $GITHUB_ENV
+          echo "FLASK_ENV=testing" >> $GITHUB_ENV
 
-# Lint (não bloqueante)
-- name: Rodar lint
-  run: |
-    pip install flake8
-    flake8 . || true
+      # Lint
+      - name: Rodar lint
+        run: |
+          pip install flake8
+          flake8 .
 
-# Testes (com suporte a Flask)
-- name: Rodar testes
-  run: |
-    pip install pytest pytest-flask
-    pytest || true
+      # Testes
+      - name: Rodar testes
+        run: |
+          pip install pytest pytest-flask
+          pytest
