@@ -10,7 +10,6 @@ jobs:
 build:
 runs-on: ubuntu-latest
 
-```
 strategy:
   matrix:
     python-version: ["3.9", "3.10", "3.11"]
@@ -41,4 +40,3 @@ steps:
   run: |
     pip install pytest
     pytest
-```
