@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Frango grelhado com arroz integral",
+    "tags": ["leve", "baixo_indice_glicemico", "emagrecimento"]
+  },
+  {
+    "name": "Peixe assado com legumes",
+    "tags": ["leve", "baixo_indice_glicemico"]
+  },
+  {
+    "name": "Risoto de queijo",
+    "tags": ["alto_indice_glicemico", "lactose", "pesado"]
+  }
+]

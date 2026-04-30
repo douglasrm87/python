@@ -1,0 +1,5 @@
+Usuário pede sugestão de prato.
+Exemplos:
+- O que você recomenda hoje?
+- Qual prato combina com meu objetivo?
+- Pode sugerir algo saudável?

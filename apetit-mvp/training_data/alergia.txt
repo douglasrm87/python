@@ -1,0 +1,4 @@
+Usuário menciona alergias alimentares.
+Exemplos:
+- Tenho alergia a lactose
+- Não posso comer glúten

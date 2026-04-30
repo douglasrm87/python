@@ -1,0 +1,77 @@
+Poderia criar um MVP para atender a um chatbot usando a interface gráfica do telegram usando python. Se precisar de algo web dar preferencia para fastapi, htm,l5 e css3. Este chatbot está relacionado a um projeto na área de nutrição. A empresa solicitou um chatbot para que os clientes ao entrarem no restaurante possam receber sugestões de alimentação considerando o perfil previamente cadastrado pelo cliente envolvendo alergias, perda de peso entre outras (para o MVP pode criar perfis fixos que no futuro possam ser automatizado), as opções do dia do cardápio (poderá sugerir 7 cardápios aleatórios para o MVP e no futuro iremos automatizar) e metas aplicadas ao perfil do cliente. Para a classificação da pergunta recebida eu peço que use alguma IA Generativa, onde sejam enviados pelo menos 15 arquivos textos pequenos para que a IA aprenda pelos dados dos arquivos e possa fazer a classificação. Como este é um MVP as classificações podem ser mais amplas, porém preciso que no futuro os alunos de nutrição possam incluir novos arquivos com mais detalhes e novas classificações para tornar as respostas mais assertivas. Peço que crie os arquivos par ao MVP, com dados objetivos que torne as respostas assertivas. Considerar que o chatbot deverá apresentar um diálogo continuo conforme a apresentação que fiz upload. Pode usar os exemplos desta apresentação para o MVP. 
+
+Excelente briefing — dá para construir um MVP didático, extensível e muito alinhado ao case APETIT que você apresentou no PDF.
+Abaixo está uma proposta completa, com arquitetura, fluxos de diálogo contínuo, bot Telegram em Python, FastAPI, IA generativa leve para classificação baseada em arquivos de texto, dados fictícios (perfis, cardápios, metas) e arquivos iniciais para os alunos de Nutrição evoluírem.
+
+✅ Visão Geral do MVP
+Objetivo do MVP
+Criar um chatbot nutricional no Telegram que:
+
+Recomende pratos do dia
+Considere perfil do cliente (alergias, objetivo, preferências)
+Use diálogo contínuo, não apenas Q&A
+Classifique intenções com IA Generativa leve treinada a partir de arquivos txt
+Seja educacional, modular e evolutivo (ideal para alunos)
+
+
+🧠 Arquitetura (Alinhada ao PDF APETIT)
+Telegram (Frontend)
+   │
+Webhook
+   │
+FastAPI (Backend)
+   │
+├── Controller (mensagem bruta)
+├── Classificador IA (treinado com textos)
+├── Motor de Regras Nutricionais
+├── Base de Dados Fake (JSON)
+└── Gerador de Resposta (templates)
+
+✔ Sem IA pesada
+✔ Contexto > Prompt
+✔ Nutrição valida, tecnologia executa
+
+apetit-mvp/
+│
+├── app/
+│   ├── main.py                # FastAPI
+│   ├── telegram_bot.py        # Webhook Telegram
+│   ├── classifier.py          # IA Generativa (classificação)
+│   ├── rules_engine.py        # Regras nutricionais
+│   ├── dialogue.py            # Diálogo contínuo
+│
+├── data/
+│   ├── profiles.json
+│   ├── menu.json
+│   ├── goals.json
+│
+├── training_data/
+│   ├── recomendacao.txt
+│   ├── alergia.txt
+│   ├── emagrecimento.txt
+│   ├── vegetariano.txt
+│   ├── lactose.txt
+│   ├── gluten.txt
+│   ├── feedback_positivo.txt
+│   ├── feedback_negativo.txt
+│   ├── reclamacao.txt
+│   ├── cardapio.txt
+│   ├── saudacao.txt
+│   ├── despedida.txt
+│   ├── objetivo_saude.txt
+│   ├── equilibrio_dieta.txt
+│   └── recomendacao_leve.txt
+│
+├── requirements.txt
+└── README.md
+
+✅ 15 arquivos de treino (alunos podem criar novos sem mudar código)
+
+🤖 IA Generativa para Classificação (MVP)
+Estratégia (educacional e segura)
+
+Leitura de todos os .txt
+Geração de embeddings locais (TF-IDF)
+Classificação por similaridade
+Fácil evolução para LLM no futuro
+

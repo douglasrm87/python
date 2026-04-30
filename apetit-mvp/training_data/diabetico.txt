@@ -1,0 +1,13 @@
+Usuário menciona diabetes ou necessidade de controle de açúcar no sangue.
+
+Contexto:
+Pessoas diabéticas precisam evitar alimentos com alto índice glicêmico,
+excesso de açúcar simples e refeições muito calóricas.
+
+Exemplos de frases do usuário:
+- Sou diabético
+- Tenho diabetes
+- Preciso evitar açúcar
+- Posso comer algo adequado para diabetes?
+- Preciso controlar a glicemia
+- Quero algo com baixo índice glicêmico

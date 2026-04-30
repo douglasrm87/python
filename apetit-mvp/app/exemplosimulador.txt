@@ -1,0 +1,23 @@
+🟢 INÍCIO DA SIMULAÇÃO DE CONVERSA
+
+👤 Usuário: Oi
+🤖 Bot: Olá, Ana! 👋
+Sou o assistente nutricional do restaurante 🍽️
+Posso te ajudar com sugestões de pratos de acordo com seu perfil.
+🔘 Opções: ['Quero uma recomendação', 'Ver cardápio do dia']
+--------------------------------------------------
+👤 Usuário: Quero uma recomendação
+🤖 Bot: Com base no seu perfil, recomendo:
+
+🥗 Frango grelhado com arroz integral
+
+O que você acha?
+🔘 Opções: ['Gostei', 'Ver outras opções', 'Não gostei']
+--------------------------------------------------
+👤 Usuário: Gostei
+🤖 Bot: Que ótimo! 😊
+Ficamos felizes em ajudar na sua escolha.
+
+Deseja algo mais?
+🔘 Opções: ['Nova recomendação', 'Encerrar']
+--------------------------------------------------
