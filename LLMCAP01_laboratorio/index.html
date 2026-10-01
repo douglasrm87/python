@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Laboratório ADS - Triagem Inteligente para ERP</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; background: #f8fafc; color: #1e293b; }
+    h1 { color: #0f172a; margin-bottom: 8px; }
+    p.sub { color: #64748b; margin-top: 0; margin-bottom: 24px; }
+    .card { background: white; padding: 24px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); margin-bottom: 24px; }
+    label { font-weight: 600; display: block; margin-bottom: 8px; }
+    textarea { width: 100%; height: 110px; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; box-sizing: border-box; font-size: 15px; }
+    button { background: #2563eb; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 15px; margin-top: 12px; }
+    button:hover { background: #1d4ed8; }
+    .badge { display: inline-block; padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: bold; }
+    .CRITICA { background: #fee2e2; color: #991b1b; }
+    .ALTA { background: #ffedd5; color: #9a3412; }
+    .MEDIA { background: #fef9c3; color: #854d0e; }
+    .BAIXA { background: #dcfce7; color: #166534; }
+    pre { background: #0f172a; color: #38bdf8; padding: 16px; border-radius: 8px; overflow-x: auto; font-size: 13px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+    th, td { text-align: left; padding: 10px; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
+    th { background: #f1f5f9; }
+  </style>
+</head>
+<body>
+
+  <h1>Triagem de Chamados com LLM + ERP</h1>
+  <p class="sub">Laboratório prático demonstrando o padrão de extração estruturada e gravação em banco relacional.</p>
+
+  <div class="card">
+    <label for="msg">Mensagem não-estruturada do Cliente (ex: WhatsApp/E-mail):</label>
+    <textarea id="msg" placeholder="Digite aqui o relato...">Urgente! O transformador principal da subestação leste começou a soltar fumaça e desarmou o disjuntor geral. Estamos com a linha de produção parada!</textarea>
+    <button onclick="enviarChamado()">Processar com LLM e Abrir OS no ERP</button>
+  </div>
+
+  <div class="card" id="resultado" style="display: none;">
+    <h3>Resultado da Triagem (JSON Estruturado retornado pelo LLM):</h3>
+    <pre id="jsonOut"></pre>
+  </div>
+
+  <div class="card">
+    <h3>Ordens de Serviço Abertas no Banco de Dados ERP</h3>
+    <button onclick="atualizarTabela()" style="background: #64748b; padding: 6px 12px; font-size: 13px; margin-bottom: 12px;">Atualizar Lista</button>
+    <table>
+      <thead>
+        <tr>
+          <th>OS #</th>
+          <th>Categoria</th>
+          <th>Prioridade</th>
+          <th>Equipamento</th>
+          <th>Descrição</th>
+        </tr>
+      </thead>
+      <tbody id="tabelaCorpo"></tbody>
+    </table>
+  </div>
+
+  <script>
+    async function enviarChamado() {
+      const texto = document.getElementById("msg").value;
+      const resCard = document.getElementById("resultado");
+      const jsonOut = document.getElementById("jsonOut");
+
+      jsonOut.textContent = "Processando com LLM e validando contrato no Backend...";
+      resCard.style.display = "block";
+
+      try {
+        const resp = await fetch("http://127.0.0.1:8000/api/chamados/processar", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ cliente_id: 1024, texto_mensagem: texto })
+        });
+        const data = await resp.json();
+        jsonOut.textContent = JSON.stringify(data, null, 2);
+        atualizarTabela();
+      } catch (err) {
+        jsonOut.textContent = "Erro ao conectar com o backend: " + err;
+      }
+    }
+
+    async function atualizarTabela() {
+      try {
+        const resp = await fetch("http://127.0.0.1:8000/api/chamados");
+        const lista = await resp.json();
+        const tbody = document.getElementById("tabelaCorpo");
+        tbody.innerHTML = "";
+        lista.forEach(os => {
+          tbody.innerHTML += `
+            <tr>
+              <td><b>#${os.id}</b></td>
+              <td>${os.categoria}</td>
+              <td><span class="badge ${os.prioridade}">${os.prioridade}</span></td>
+              <td>${os.equipamento}</td>
+              <td>${os.descricao}</td>
+            </tr>
+          `;
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    // Carrega a tabela ao abrir
+    atualizarTabela();
+  </script>
+</body>
+</html>
