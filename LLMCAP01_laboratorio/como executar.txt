@@ -1,0 +1,82 @@
+Vou te passar o passo a passo exato para rodar esse laboratório localmente e deixar a LLM funcionando no seu ambiente.
+
+Como rodar o programa
+1) Abra o terminal no diretório do projeto
+No terminal:
+
+    cd /workspaces/python/LLMCAP01_laboratorio
+
+2) Verifique se o Ollama está instalado
+No terminal:
+    ollama --version
+        ollama version is 0.35.0
+
+        Se não aparecer a versão, instale o Ollama:
+            curl -fsSL https://ollama.com/install.sh | sh
+
+Depois inicie o serviço local:
+    ollama serve
+
+Deixe esse terminal aberto em segundo plano ou em outra aba, porque o backend vai conversar com ele.
+
+O modelo usado no projeto é o llama3.2:1b, então também vale verificar se ele está disponível:
+    ollama list
+
+        @douglasrm87 ➜ /workspaces/python/LLMCAP01_laboratorio (master) $ ollama list
+        [GIN] 2026/10/01 - 17:35:21 | 200 |      55.323µs |       127.0.0.1 | HEAD     "/"
+        [GIN] 2026/10/01 - 17:35:21 | 200 |    1.339929ms |       127.0.0.1 | GET      "/api/tags"
+        NAME           ID              SIZE      MODIFIED       
+        llama3.2:1b    baf6a787fdff    1.3 GB    14 minutes ago   
+
+        Se não estiver, baixe:
+            ollama pull llama3.2:1b
+
+3) Instale as dependências do Python
+No mesmo diretório:
+    pip install fastapi uvicorn httpx pydantic
+
+4) Inicie o backend
+No terminal:
+    python server.py
+
+
+Você deve ver algo como:
+    Uvicorn running on http://127.0.0.1:8000
+
+Se isso aparecer, o servidor está funcionando.
+
+5) Abra a interface web
+Abra o arquivo HTML no navegador:
+    xdg-open index.html
+
+Ou simplesmente abra o arquivo index.html pelo VS Code / navegador.
+
+    http://127.0.0.1:8000/api/chamados/processar
+
+A página já está configurada para enviar a mensagem para:
+
+
+6) Teste o fluxo
+Na página, digite uma mensagem como:
+
+
+Clique em “Processar com LLM e Abrir OS no ERP”.
+
+Se tudo estiver certo, o backend retorna um JSON com a categoria, prioridade e a ordem criada.
+
+Dica importante
+Se o backend não conseguir conectar ao Ollama, normalmente aparece erro como:
+
+503
+“Ollama nao esta em execucao”
+Então rode:
+    ollama serve
+
+e depois repita o teste.
+
+Validação que já funcionou
+Eu testei o endpoint com a mensagem do laboratório e a resposta foi bem-sucedida, com:
+
+categoria: MANUTENCAO_ELETRICA
+prioridade: ALTA
+ordem gravada no ERP simulado

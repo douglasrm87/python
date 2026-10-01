@@ -1,0 +1,50 @@
+✅ Motivo da mensagem
+A mensagem:
+    {"detail":"Method Not Allowed"}
+
+significa o que o backend respondeu com HTTP 405: “método não permitido”.
+
+No seu projeto, a rota de processamento foi definida em server.py como:
+@app.post("/api/chamados/processar")
+
+Ou seja, ela aceita apenas POST.
+
+O que isso quer dizer na prática
+Você recebeu essa resposta porque o navegador ou o código tentou acessar essa URL com o método errado, normalmente:
+
+GET /api/chamados/processar em vez de POST
+abrir a URL diretamente no navegador
+algum botão/form que dispara um request sem o método correto
+No caso da página index.html, o botão correto faz isso:
+
+
+fetch("http://127.0.0.1:8000/api/chamados/processar", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ cliente_id: 1024, texto_mensagem: texto })
+});
+
+
+Esse trecho está correto.
+
+O que foi validado
+Eu validei diretamente o backend com o comando equivalente a:
+
+curl -s -X POST http://127.0.0.1:8000/api/chamados/processar \
+  -H 'Content-Type: application/json' \
+  -d '{"cliente_id":1024,"texto_mensagem":"Urgente! O transformador principal da subestacao leste começou a soltar fumaça e desarmou o disjuntor geral. Estamos com a linha de produção parada!"}'
+
+
+Esse teste retornou sucesso, com status: "SUCESSO" e a ordem sendo salva. Isso prova que o problema não é o endpoint em si, e sim o uso do método HTTP errado no momento em que a mensagem apareceu.
+
+Como confirmar no navegador
+Abra o DevTools do navegador e veja a aba “Network”:
+
+se a request para /api/chamados/processar estiver como GET, aí está o problema
+se estiver como POST, aí a rota está certa e o erro pode ter sido de outra origem
+Resumo
+Method Not Allowed = rota existe, mas o método não combina
+a rota correta é POST /api/chamados/processar
+a rota de listagem é GET /api/chamados
+Se você quiser, posso te mostrar exatamente como testar isso no navegador passo a passo e como confirmar no console do DevTools.
+

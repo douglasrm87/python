@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laboratório ADS - Visão Geral</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --primary: #1d4ed8;
+      --primary-dark: #1e3a8a;
+      --accent: #0f172a;
+      --muted: #64748b;
+      --success: #166534;
+      --success-soft: #dcfce7;
+      --warning: #9a5b00;
+      --warning-soft: #fff3c4;
+      --border: #e2e8f0;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #eef4ff 0%, var(--bg) 100%);
+      color: var(--accent);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    .tag {
+      background: var(--warning-soft);
+      color: var(--warning);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .hero {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1.4fr 0.9fr;
+      gap: 24px;
+      padding: 32px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 3vw, 3rem);
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin: 0 0 20px;
+      max-width: 620px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 12px 18px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: 0.2s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .button.primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .button.primary:hover { background: #1e40af; }
+
+    .button.secondary {
+      background: #eff6ff;
+      color: var(--primary-dark);
+      border: 1px solid #bfdbfe;
+    }
+
+    .button.secondary:hover { background: #dbeafe; }
+
+    .panel {
+      background: linear-gradient(135deg, #eff6ff, #f8fafc);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .panel h3 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-size: 1.1rem;
+    }
+
+    .list {
+      padding-left: 18px;
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 12px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+
+    .card small {
+      display: inline-block;
+      background: var(--success-soft);
+      color: var(--success);
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .card h2 {
+      margin: 0 0 10px;
+      font-size: 1.25rem;
+    }
+
+    .card p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .mini {
+      margin-top: auto;
+      display: inline-block;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .footer-note {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <div class="brand">Laboratório ADS</div>
+      <div class="tag">LLM + ERP + Triagem Inteligente</div>
+    </div>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <h1>Portal de demonstrações do laboratório</h1>
+          <p class="subtitle">
+            Aqui você e seus alunos conseguem entender rapidamente o fluxo completo:
+            o cliente envia um relato, a IA interpreta o problema, a aplicação classifica
+            a demanda e grava a ordem no ERP simulado.
+          </p>
+
+          <div class="actions">
+            <a class="button primary" href="/triagem">Abrir triagem</a>
+            <a class="button secondary" href="/api/chamados">Ver ordens do ERP</a>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Fluxo do laboratório</h3>
+          <ul class="list">
+            <li>Cliente envia a mensagem</li>
+            <li>LLM estrutura o chamado</li>
+            <li>Backend valida os campos</li>
+            <li>ERP simulado salva a ordem</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <small>Demo 01</small>
+        <h2>Triagem inteligente</h2>
+        <p>Teste a classificação de um chamado com IA e veja a categoria, prioridade e equipamento sugeridos.</p>
+        <a class="mini" href="/triagem">Acessar demo →</a>
+      </article>
+
+      <article class="card">
+        <small>Demo 02</small>
+        <h2>Lista de ordens</h2>
+        <p>Consulte o banco simulado do ERP e visualize as ordens de serviço já registradas.</p>
+        <a class="mini" href="/api/chamados">Abrir lista →</a>
+      </article>
+
+      <article class="card">
+        <small>Demo 03</small>
+        <h2>Objetivo didático</h2>
+        <p>Use esse ambiente para demonstrar como IA, APIs e banco de dados trabalham juntos em uma solução prática.</p>
+        <a class="mini" href="/triagem">Executar exemplo →</a>
+      </article>
+    </section>
+
+    <div class="footer-note">
+      Projeto preparado para aula prática de integração entre LLM, FastAPI e SQLite.
+    </div>
+  </div>
+</body>
+</html>
