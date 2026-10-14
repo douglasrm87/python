@@ -40,21 +40,30 @@ def normalizar_prioridade(prio: Optional[str]) -> str:
     return "MEDIA"
 
 def extrair_equipamento_inteligente(texto: str, equipamento_llm: str) -> str:
-    """Captura o equipamento e sua tag específica (ex: T30, TR-02, AL-03, DJ-01) do texto."""
+    """Captura o equipamento, tags específicas (ex: T30, TR-02) e itens da rede como chaves e disjuntores."""
     t_low = texto.lower()
+    
+    # 1. Busca por tags explícitas (ex: T30, TR-02, AL-03, DJ-01)
     match = re.search(r'\b(tr-?\d+|t-?\d+|al-?\d+|dj-?\d+|trafo\s*\w+)\b', t_low)
     if match:
         tag = match.group(1).upper()
         base = "Transformador" if "t" in tag or "tr" in tag else ("Alimentador" if "al" in tag else ("Disjuntor" if "dj" in tag else "Equipamento"))
         return f"{base} {tag}"
+    
     if equipamento_llm and equipamento_llm not in ["NENHUM", ""]:
         return equipamento_llm
-    if "trafo" in t_low or "transformador" in t_low:
+        
+    # 2. Busca por palavras-chave estruturais da rede elétrica
+    if any(k in t_low for k in ["trafo", "transformador"]):
         return "Transformador"
-    if "disjuntor" in t_low or "dj" in t_low:
+    if any(k in t_low for k in ["disjuntor", "dj"]):
         return "Disjuntor"
-    if "alimentador" in t_low or "al" in t_low:
+    if any(k in t_low for k in ["alimentador", "al"]):
         return "Alimentador"
+    # incluido para resolver a falta da chave.
+    if any(k in t_low for k in ["chave", "seccionadora", "faca", "tandem"]):
+        return "Chave Seccionadora"
+        
     return "NENHUM"
 
 def extrair_local_inteligente(texto: str, local_llm: str) -> str:
