@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laboratório ADS - Modularizada</title>
+  <style>
+    :root {
+      --bg: #f4f7fb; --card: #ffffff; --primary: #1d4ed8; --primary-dark: #1e3a8a;
+      --accent: #0f172a; --muted: #64748b; --success-soft: #dcfce7; --success: #166534;
+      --warning-soft: #fff3c4; --warning: #9a5b00; --border: #e2e8f0;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: linear-gradient(180deg, #eef4ff 0%, var(--bg) 100%); color: var(--accent); }
+    .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px 80px; }
+    .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .brand { font-size: 1.6rem; font-weight: 700; color: var(--primary-dark); }
+    .tag { background: var(--warning-soft); color: var(--warning); padding: 8px 12px; border-radius: 999px; font-size: 0.82rem; font-weight: 700; }
+    .hero { background: var(--card); border: 1px solid var(--border); border-radius: 18px; box-shadow: var(--shadow); overflow: hidden; margin-bottom: 32px; padding: 32px; }
+    .hero-inner { display: grid; grid-template-columns: 1.4fr 0.9fr; gap: 24px; }
+    h1 { margin: 0 0 12px; font-size: clamp(2rem, 3vw, 2.5rem); }
+    .subtitle { font-size: 1.05rem; color: var(--muted); line-height: 1.7; margin: 0 0 20px; }
+    .actions { display: flex; gap: 12px; }
+    .button { padding: 12px 18px; border-radius: 10px; text-decoration: none; font-weight: 700; display: inline-block; }
+    .button.primary { background: var(--primary); color: white; }
+    .button.secondary { background: #eff6ff; color: var(--primary-dark); border: 1px solid #bfdbfe; }
+    .panel { background: #eff6ff; border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <div class="brand">Laboratório ADS</div>
+      <div class="tag">LLM + ERP + Dialogue Interfaces</div>
+    </div>
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <h1>Portal de demonstrações do laboratório</h1>
+          <p class="subtitle">
+            Arquitetura modular demonstrando o fluxo completo: o técnico relata o problema em linguagem livre, 
+            o Dialogue Control Agent contextualiza e clarifica, e a ferramenta Text-to-SQL grava a ordem de serviço no SQLite.
+          </p>
+          <div class="actions">
+            <a class="button primary" href="/triagem">Abrir Chat e Triagem</a>
+            <a class="button secondary" href="/api/chamados">Ver Ordens no ERP (JSON)</a>
+            <a class="button secondary" href="/chamados">Ver Ordens no ERP (Painel Visual)</a>
+          </div>
+        </div>
+        <div class="panel">
+          <h3>Fluxo do laboratório</h3>
+          <ul>
+            <li>Técnico envia a mensagem</li>
+            <li>Memória de Sessão recupera histórico</li>
+            <li>Dialogue Agent avalia pertinência e clarifica</li>
+            <li>Text-to-SQL executa INSERT seguro no SQLite</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

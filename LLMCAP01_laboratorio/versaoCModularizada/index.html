@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratório ADS - Dialogue Control Agent & Text-to-SQL</title>
+  <style>
+    :root { --primary: #1d4ed8; --bg: #f8fafc; --card: #ffffff; --border: #e2e8f0; --text: #0f172a; --muted: #64748b; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 24px; }
+    .header { max-width: 1000px; margin: 0 auto 20px; }
+    .container { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05); }
+    .chat-box { height: 380px; overflow-y: auto; border: 1px solid var(--border); border-radius: 8px; padding: 12px; background: #fafafa; display: flex; flex-direction: column; gap: 10px; }
+    .msg { max-width: 82%; padding: 10px 14px; border-radius: 12px; font-size: 13.5px; line-height: 1.45; }
+    .msg.user { align-self: flex-end; background: #2563eb; color: white; border-bottom-right-radius: 2px; }
+    .msg.assistant { align-self: flex-start; background: #e2e8f0; color: #0f172a; border-bottom-left-radius: 2px; }
+    .msg.clarificacao { align-self: flex-start; background: #fef3c7; color: #92400e; border: 1px solid #fde68a; border-bottom-left-radius: 2px; }
+    .msg.evento-sucesso { align-self: center; background: #dcfce7; color: #166534; font-weight: bold; font-size: 12px; padding: 6px 12px; border-radius: 999px; }
+    .input-row { display: flex; gap: 8px; margin-top: 12px; }
+    input[type="text"] { flex: 1; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; }
+    button { background: var(--primary); color: white; border: none; padding: 10px 18px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+    button:hover { background: #1e40af; }
+    .audit-card { margin-top: 16px; background: #f1f5f9; border-radius: 8px; padding: 12px; font-size: 12px; }
+    table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 8px; }
+    th, td { text-align: left; padding: 8px; border-bottom: 1px solid var(--border); }
+    th { background: #f1f5f9; }
+    .badge { padding: 3px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; }
+    .CRITICA { background: #fee2e2; color: #991b1b; }
+    .ALTA { background: #ffedd5; color: #9a3412; }
+    .MEDIA { background: #fef9c3; color: #854d0e; }
+    .BAIXA { background: #dcfce7; color: #166534; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Dialogue Interfaces: Controle de Diálogo & Text-to-SQL</h1>
+    <p>Demonstração prática dos programas da pasta LLMCAP01_laboratorio.</p>
+  </div>
+  <div class="container">
+    <div class="card">
+      <h3>Chat Operacional (Dialogue Control Agent)</h3>
+      <div id="chatBox" class="chat-box">
+        <div class="msg assistant">Olá! Sou o assistente operacional da empresa. Qual ocorrência você gostaria de registrar ou consultar?</div>
+      </div>
+      <div class="input-row">
+        <input type="text" id="campoTexto" placeholder="Digite seu relato..." onkeydown="if(event.key==='Enter') enviarMensagem()" />
+        <button onclick="enviarMensagem()">Enviar</button>
+      </div>
+      <div class="audit-card">
+        <div><b>Auditoria do Dialogue Agent:</b></div>
+        <div id="auditoriaTexto" style="color: #475569; margin-top: 4px;">Aguardando primeira interação...</div>
+      </div>
+    </div>
+    <div class="card">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h3>Ordens no ERP (Text-to-SQL Tool)</h3>
+        <button onclick="carregarOrdens()" style="background: #64748b; font-size: 11px; padding: 5px 10px;">Atualizar</button>
+      </div>
+      <table>
+        <thead>
+          <tr><th>OS#</th><th>Equipamento</th><th>Local</th><th>Prioridade</th></tr>
+        </thead>
+        <tbody id="tabelaOrdens"></tbody>
+      </table>
+    </div>
+  </div>
+  <script>
+    let currentSessionId = null;
+    async function enviarMensagem() {
+      const input = document.getElementById("campoTexto");
+      const texto = input.value.trim();
+      if (!texto) return;
+      adicionarMensagem("user", texto);
+      input.value = "";
+      try {
+        const resp = await fetch("/api/chat/mensagem", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ session_id: currentSessionId, cliente_id: 1042, texto_mensagem: texto })
+        });
+        const dados = await resp.json();
+        currentSessionId = dados.session_id;
+        atualizarAuditoria(dados);
+        if (dados.tipo_resposta === "PERGUNTA_CLARIFICACAO") {
+          adicionarMensagem("clarificacao", "⚠️ " + dados.mensagem_assistente);
+        } else if (dados.tipo_resposta === "ORDEM_CRIADA") {
+          adicionarMensagem("evento-sucesso", "⚡ Ordem #" + dados.ordem_servico_id + " gravada via Text-to-SQL Tool!");
+          adicionarMensagem("assistant", dados.mensagem_assistente);
+          carregarOrdens();
+        } else {
+          adicionarMensagem("assistant", dados.mensagem_assistente);
+        }
+      } catch (err) {
+        adicionarMensagem("assistant", "Erro de conexão: " + err);
+      }
+    }
+    function adicionarMensagem(tipo, texto) {
+      const box = document.getElementById("chatBox");
+      const div = document.createElement("div");
+      div.className = "msg " + tipo;
+      div.innerText = texto;
+      box.appendChild(div);
+      box.scrollTop = box.scrollHeight;
+    }
+    function atualizarAuditoria(dados) {
+      const painel = document.getElementById("auditoriaTexto");
+      const est = dados.dados_estruturados || {};
+      const reescrita = dados.pergunta_reescrita_usada ? `"${dados.pergunta_reescrita_usada}"` : "Não houve reescrita";
+      painel.innerHTML = `
+        • <b>Pertinente ao Banco:</b> ${est.pertinente_ao_banco ? 'Sim' : 'Não'}<br>
+        • <b>Reescrita Contextual:</b> ${reescrita}<br>
+        • <b>Clarificação Exigida:</b> ${est.precisa_clarificacao ? 'Sim' : 'Não'}<br>
+        • <b>Delegação SQL:</b> ${dados.tipo_resposta === 'ORDEM_CRIADA' ? 'Executada com Sucesso' : 'Pendente de Clarificação'}
+      `;
+    }
+    async function carregarOrdens() {
+      try {
+        const res = await fetch("/api/chamados");
+        const lista = await res.json();
+        const tbody = document.getElementById("tabelaOrdens");
+        tbody.innerHTML = "";
+        lista.forEach(o => {
+          tbody.innerHTML += `
+            <tr>
+              <td><b>#${o.id}</b></td>
+              <td>${o.equipamento}</td>
+              <td>${o.local}</td>
+              <td><span class="badge ${o.prioridade}">${o.prioridade}</span></td>
+            </tr>
+          `;
+        });
+      } catch (e) {
+        console.error("Erro ao listar chamados", e);
+      }
+    }
+    carregarOrdens();
+  </script>
+</body>
+</html>

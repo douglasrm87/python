@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratório ADS - ERP / Ordens de Serviço</title>
+  <style>
+    :root { --primary: #1d4ed8; --bg: #f8fafc; --card: #ffffff; --border: #e2e8f0; --text: #0f172a; --muted: #64748b; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 32px; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .header-box { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; background: var(--card); padding: 20px 24px; border-radius: 14px; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05); }
+    h1 { margin: 0; font-size: 1.5rem; color: #1e3a8a; }
+    p { margin: 4px 0 0; color: var(--muted); font-size: 0.9rem; }
+    .btn { background: var(--primary); color: white; border: none; padding: 10px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; text-decoration: none; font-size: 0.9rem; display: inline-block; }
+    .btn:hover { background: #1e40af; }
+    .btn-secondary { background: #64748b; }
+    .btn-secondary:hover { background: #475569; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05); }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14px; }
+    th, td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--border); }
+    th { background: #f1f5f9; color: #334155; font-weight: 600; }
+    tr:hover { background: #f8fafc; }
+    .badge { padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; text-transform: uppercase; }
+    .CRITICA { background: #fee2e2; color: #991b1b; }
+    .ALTA { background: #ffedd5; color: #9a3412; }
+    .MEDIA { background: #fef9c3; color: #854d0e; }
+    .BAIXA { background: #dcfce7; color: #166534; }
+    .status-badge { background: #e0f2fe; color: #0369a1; padding: 3px 8px; border-radius: 999px; font-size: 11px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header-box">
+      <div>
+        <h1>Ordens de Serviço Registradas (ERP Simulado)</h1>
+        <p>Visualização tabular completa de chamados e manutenções gerados pelo Dialogue Agent & Text-to-SQL.</p>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <button class="btn btn-secondary" onclick="carregarChamados()">Atualizar Lista</button>
+        <a class="btn" href="/triagem">Voltar ao Chat</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="overflow-x: auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>OS #</th>
+              <th>Cliente ID</th>
+              <th>Categoria</th>
+              <th>Equipamento</th>
+              <th>Subestação / Local</th>
+              <th>Prioridade</th>
+              <th>Descrição Resumida</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="tabelaCorpo">
+            <tr><td colspan="8" style="text-align: center; color: var(--muted);">Carregando ordens de serviço...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function carregarChamados() {
+      try {
+        const res = await fetch("/api/chamados");
+        const lista = await res.json();
+        const tbody = document.getElementById("tabelaCorpo");
+        tbody.innerHTML = "";
+
+        if (lista.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: var(--muted);">Nenhuma ordem de serviço cadastrada no momento.</td></tr>`;
+          return;
+        }
+
+        lista.forEach(o => {
+          tbody.innerHTML += `
+            <tr>
+              <td><b>#${o.id}</b></td>
+              <td>${o.cliente_id}</td>
+              <td>${o.categoria}</td>
+              <td><b>${o.equipamento}</b></td>
+              <td>${o.local}</td>
+              <td><span class="badge ${o.prioridade}">${o.prioridade}</span></td>
+              <td>${o.descricao || '-'}</td>
+              <td><span class="status-badge">${o.status}</span></td>
+            </tr>
+          `;
+        });
+      } catch (e) {
+        console.error("Erro ao buscar chamados:", e);
+        document.getElementById("tabelaCorpo").innerHTML = `<tr><td colspan="8" style="text-align: center; color: #dc2626;">Erro ao carregar dados do ERP.</td></tr>`;
+      }
+    }
+
+    carregarChamados();
+  </script>
+</body>
+</html>
