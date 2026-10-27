@@ -62,6 +62,78 @@ def init_erp_db():
 
 init_erp_db()
 
+
+# -------------------------------------------------------------
+# SCHEMA LINKING TOOL - Incluido esta novidade para demonstrar como podemos mapear termos de negócio para categorias do ERP
+# -------------------------------------------------------------
+class SchemaLinkingTool:
+    """
+    Traduz termos de negócio para categorias do ERP.
+    """
+
+    def __init__(self):
+
+        self.mapa = {
+
+            "MANUTENCAO_ELETRICA": [
+                "transformador",
+                "energia",
+                "disjuntor",
+                "subestação",
+                "subestacao",
+                "motor",
+                "cabo",
+                "painel",
+                "fumaça",
+                "fumaca",
+                "curto circuito"
+            ],
+
+            "LOGISTICA": [
+                "entrega",
+                "frete",
+                "transporte",
+                "estoque",
+                "rota",
+                "pedido"
+            ],
+
+            "FATURAMENTO": [
+                "fatura",
+                "boleto",
+                "pagamento",
+                "financeiro",
+                "nota",
+                "duplicata"
+            ]
+        }
+
+    def identificar_categoria(self, texto: str):
+
+        texto = (texto or "").lower()
+
+        for categoria, palavras in self.mapa.items():
+
+            encontradas = [
+                p for p in palavras
+                if p in texto
+            ]
+
+            if encontradas:
+
+                return {
+                    "categoria": categoria,
+                    "evidencias": encontradas
+                }
+
+        return {
+            "categoria": "OUTRO",
+            "evidencias": []
+        }
+
+
+schema_linking_tool = SchemaLinkingTool()
+
 # -------------------------------------------------------------
 # 2. SCHEMAS DE DADOS (Pydantic)
 # -------------------------------------------------------------
@@ -156,7 +228,10 @@ def extrair_json_do_texto(texto: str) -> dict:
     return json.loads(texto)
 
 
-async def extrair_com_llm(texto_mensagem: str) -> OrdemServicoExtraida:
+#async def extrair_com_llm(texto_mensagem: str) -> OrdemServicoExtraida:
+# para atender ao conceito de Schema linking, vamos passar o contexto do schema para o LLM, para que ele possa entender melhor como mapear os termos do cliente para as categorias do ERP.
+async def extrair_com_llm(
+    texto_mensagem: str,     contexto_schema: dict ) -> OrdemServicoExtraida:
     """
     Envia a mensagem ao modelo e exige um JSON estruturado estrito.
     """
@@ -174,7 +249,23 @@ async def extrair_com_llm(texto_mensagem: str) -> OrdemServicoExtraida:
         "Responda apenas o objeto JSON puro."
     )
 
-    prompt = f"Relato do cliente:\n{texto_mensagem}\n\nJSON:"
+    #prompt = f"Relato do cliente:\n{texto_mensagem}\n\nJSON:"
+    # para antender a inclusão do contexto do schema, vamos incluir o contexto no prompt, para que o LLM possa entender melhor como mapear os termos do cliente para as categorias do ERP.
+    prompt = f"""
+            Contexto identificado pelo Schema Linking Tool
+
+            Categoria sugerida:
+            {contexto_schema['categoria']}
+
+            Termos encontrados:
+            {', '.join(contexto_schema['evidencias'])}
+
+            Relato do cliente:
+
+            {texto_mensagem}
+
+            JSON:
+        """
 
     payload = {
         "model": MODELO_LLM,
@@ -195,10 +286,22 @@ async def extrair_com_llm(texto_mensagem: str) -> OrdemServicoExtraida:
             texto_json = dados_resposta.get("response", "{}")
 
             dados_dict = extrair_json_do_texto(texto_json)
-            categoria = normalizar_categoria(dados_dict.get("categoria"))
-            if categoria == "OUTRO":
-                categoria = classificar_categoria_por_palavras(texto_mensagem)
-            dados_dict["categoria"] = categoria
+
+            #incluido para atender ao conceito de Schema linking, vamos usar a categoria sugerida pelo Schema Linking Tool, caso o LLM retorne OUTRO.
+
+            categoria_llm = normalizar_categoria(
+                dados_dict.get("categoria")
+            )
+
+            categoria_schema = contexto_schema["categoria"]
+
+            if categoria_schema != "OUTRO":
+                categoria_final = categoria_schema
+            else:
+                categoria_final = categoria_llm
+            # Fim
+            
+            dados_dict["categoria"] = categoria_final
             dados_dict["prioridade"] = normalizar_prioridade(dados_dict.get("prioridade"))
             dados_dict["equipamento_afetado"] = str(dados_dict.get("equipamento_afetado", "NENHUM") or "NENHUM")
             dados_dict["descricao_resumida"] = str(dados_dict.get("descricao_resumida", "") or "")[:120]
@@ -218,9 +321,22 @@ async def extrair_com_llm(texto_mensagem: str) -> OrdemServicoExtraida:
 @app.post("/api/chamados/processar")
 async def processar_chamado(requisicao: MensagemClienteRequest):
     # Passo 1: LLM interpreta o texto
-    os_extraida = await extrair_com_llm(requisicao.texto_mensagem)
+        #os_extraida = await extrair_com_llm(requisicao.texto_mensagem)
+    # para atender ao conceito de Schema linking, vamos primeiro identificar a categoria sugerida pelo Schema Linking Tool, e depois passar essa informação para o LLM, para que ele possa entender melhor como mapear os termos do cliente para as categorias do ERP.
+    # Passo 1 - Schema Linking
+    contexto_schema = (
+        schema_linking_tool.identificar_categoria(
+            requisicao.texto_mensagem
+        )
+    )
 
-    # Passo 2: Backend insere no ERP de forma determinística e segura
+    # Passo 2 - LLM
+    os_extraida = await extrair_com_llm(
+        requisicao.texto_mensagem,
+        contexto_schema
+    )
+
+    # Passo 3: Backend insere no ERP de forma determinística e segura
     conn = sqlite3.connect("erp_simulado.db")
     cursor = conn.cursor()
     cursor.execute("""
@@ -240,8 +356,10 @@ async def processar_chamado(requisicao: MensagemClienteRequest):
     return {
         "status": "SUCESSO",
         "ordem_servico_id": os_id,
+        "schema_linking": contexto_schema,
         "dados_gerados": os_extraida.model_dump(),
-        "mensagem": f"Ordem de Servico #{os_id} aberta com sucesso no ERP."
+        "mensagem":
+            f"Ordem de Servico #{os_id} aberta com sucesso no ERP."
     }
 
 @app.get("/api/chamados")
