@@ -219,18 +219,30 @@ class DialogueControlAgent:
     async def _interpretar_com_llm(
         self, texto_atual: str, historico_texto: str, contexto_schema: dict
     ) -> AnaliseDialogoExtraida:
+        
         system_prompt = (
-            "Voce e um assistente de triagem tecnica de energia eletrica e ERP. "
-            "Analise o Historico da Conversa e extraia os dados em formato JSON puro:\n"
+            "Voce e um assistente estrito de triagem tecnica de energia eletrica e ERP.\n"
+            "Sua tarefa e analisar o relato do cliente e extrair as chaves em formato JSON puro.\n"
+            "REGRAS CRITICAS CONTRA ALUCINACAO:\n"
+            "1. Se o cliente NAO disser explicitamente o nome de um equipamento (ex: TR-02, DJ-102), "
+            "defina obrigatoriamente \"equipamento_afetado\": \"NENHUM\". NUNCA invente ou use exemplos do prompt.\n"
+            "2. Se o cliente NAO disser explicitamente a localidade, rua, subestacao ou bairro (ex: Ahu, Centro, Cristo Rei), "
+            "defina obrigatoriamente \"local_afetado\": \"NÃO INFORMADO\". NUNCA invente localizacoes.\n"
+            "3. Se as informacoes estiverem incompletas, defina \"precisa_clarificacao\": true e formule "
+            "uma pergunta amigavel em \"pergunta_clarificacao\" pedindo o dado ausente.\n\n"
+            "FORMATO DE SAIDA EXIGIDO (JSON PURO):\n"
             "{\n"
-            '  "categoria": "MANUTENCAO_ELETRICA" | "LOGISTICA" | "FATURAMENTO" | "OUTRO",\n'
-            '  "prioridade": "BAIXA" | "MEDIA" | "ALTA" | "CRITICA",\n'
-            '  "equipamento_afetado": "codigo do equipamento (ex: TR-02, DJ-102) ou NENHUM",\n'
-            '  "local_afetado": "nome da subestacao/local (ex: Subestacao Ahu, Centro) ou NAO INFORMADO",\n'
-            '  "descricao_resumida": "resumo consolidado do problema em ate 120 caracteres"\n'
+            "  \"categoria\": \"MANUTENCAO_ELETRICA\" | \"LOGISTICA\" | \"FATURAMENTO\" | \"OUTRO\",\n"
+            "  \"prioridade\": \"BAIXA\" | \"MEDIA\" | \"ALTA\" | \"CRITICA\",\n"
+            "  \"equipamento_afetado\": \"NENHUM\" ou o codigo real mencionado,\n"
+            "  \"local_afetado\": \"NÃO INFORMADO\" ou o local real mencionado,\n"
+            "  \"descricao_resumida\": \"Resumo do problema\",\n"
+            "  \"precisa_clarificacao\": true | false,\n"
+            "  \"pergunta_clarificacao\": \"Sua pergunta se faltar local ou equipamento, senao vazio\"\n"
             "}\n"
-            "Responda APENAS o JSON."
+            "Responda APENAS o JSON puro, sem textos complementares ou explicacoes."
         )
+
 
         prompt = f"""Contexto Schema Linking:
 Categoria sugerida: {contexto_schema['categoria']}
